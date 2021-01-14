@@ -33,7 +33,7 @@ export default {
           list:[],
           bgColorList:['linear-gradient(90deg, #00b09b,#96c93d)','linear-gradient(90deg, #003973,#E5E5BE)'],
           bgImg:"https://cdn.xn2001.com/20200627151647.jpg",
-          xmHeader:"乐心湖's Blog",
+          xmHeader:"旧岸's Blog",
           xm:"我们拥有决定自己言行的力量，因此会犯错。我们拥有决定自己言行的力量，因此能从错误中重新站起来。"
       };
     },

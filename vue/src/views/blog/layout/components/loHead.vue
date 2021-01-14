@@ -6,12 +6,12 @@
               <img class="lo-dh-img" src="../../../../../static/img/avatar.png"/>
           </el-menu-item>
           <div style="height:60px;width:200px;float:left"></div>
-          <el-menu-item index="/guanwang/shouye" >首页</el-menu-item>
-          <el-menu-item index="/guanwang/biaoqian" >标签</el-menu-item>
-          <el-menu-item index="/guanwang/guidang" >归档</el-menu-item>
-          <el-menu-item index="/guanwang/xiangmu" >项目</el-menu-item>
-          <el-menu-item index="/guanwang/liuyan" >留言</el-menu-item>
-          <el-menu-item index="/guanwang/guanyu" >我的</el-menu-item>
+          <el-menu-item index="/blog/shouye" >首页</el-menu-item>
+          <el-menu-item index="/blog/biaoqian" >标签</el-menu-item>
+          <el-menu-item index="/blog/guidang" >归档</el-menu-item>
+          <el-menu-item index="/blog/xiangmu" >项目</el-menu-item>
+          <el-menu-item index="/blog/liuyan" >留言</el-menu-item>
+          <el-menu-item index="/blog/guanyu" >我的</el-menu-item>
           <el-menu-item index="/login">
             <div class="el-icon-position"></div>
           </el-menu-item>
@@ -25,7 +25,7 @@ export default {
     data() {
       return {
         avatar:"",
-        activeIndex: '/guanwang/shouye',
+        activeIndex: '/blog/shouye',
 
       };
     },
