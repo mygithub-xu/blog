@@ -89,8 +89,4 @@ export default {
   blogProjectBatchDelete: `blog/blogProject/batchdelete`,//批量删除
   blogProjectSaveOrUpdate: `blog/blogProject/saveOrUpdate`,//更新或新增
   blogProjectListFieldQuery: `blog/blogProject/listFieldQuery`,//列表查询
-
-  
-
-  
 }
