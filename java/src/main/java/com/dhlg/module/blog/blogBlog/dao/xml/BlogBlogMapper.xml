@@ -20,7 +20,7 @@
     <sql id="Base_Column_List">
                 id,                title,                content,                category,                description,                read,                like,                create_time,                update_time,                cover_img    </sql>
 
-    <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter" resultType="com.dhlg.module.blog.blogBlog.entity.BlogBlog">
+    <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter.Parameter" resultType="com.dhlg.module.blog.blogBlog.entity.BlogBlog">
         select * from blog_blog
         <trim prefix="where" prefixOverrides="and">
             <if test="parameter.condition != null and parameter.condition.category !=null and parameter.condition.category !=''and parameter.condition.category !='-1' ">

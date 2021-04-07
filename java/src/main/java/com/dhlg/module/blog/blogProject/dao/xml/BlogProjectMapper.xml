@@ -16,7 +16,7 @@
     <sql id="Base_Column_List">
                 id,                img,                title,                description,                url,                create_time    </sql>
 
-    <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter" resultType="com.dhlg.module.blog.blogProject.entity.BlogProject">
+    <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter.Parameter" resultType="com.dhlg.module.blog.blogProject.entity.BlogProject">
         select * from blog_project
         <trim prefix="where" prefixOverrides="and">
             <if test="parameter.condition != null and parameter.condition.queryContent !=null and parameter.condition.queryContent !='' ">

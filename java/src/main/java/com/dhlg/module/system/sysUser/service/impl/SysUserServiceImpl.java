@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dhlg.utils.Parameter.Parameter;
 import com.dhlg.exception.ParamIsNullException;
 import com.dhlg.exception.UncheckedException;
-import com.dhlg.redis.RedisUtil;
 import com.dhlg.shiro.utils.PasswordHelper;
 import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
@@ -23,7 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import com.dhlg.redis.RedisUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
