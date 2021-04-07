@@ -3,19 +3,17 @@ package com.dhlg.module.system.sysUser.controller;
 
 import com.dhlg.module.system.sysUser.entity.SysUser;
 import com.dhlg.module.system.sysUser.service.ISysUserService;
-import com.dhlg.utils.common.Parameter;
-import com.dhlg.utils.common.Result;
-import com.dhlg.utils.common.StringUtils;
-import com.dhlg.utils.common.exception.ParamIsNullException;
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.utils.Result;
+import com.dhlg.utils.StringUtils;
+import com.dhlg.exception.ParamIsNullException;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,8 +43,9 @@ public class SysUserController {
 
     @ApiOperation("退出系统")
     @PostMapping("/logout")
-    public void logout(){
-        SecurityUtils.getSubject().logout();
+    public void logout(HttpServletRequest request){
+        doService.logout(request);
+
     }
 
     @ApiOperation("当前在其他地方已登录，您已被踢出！")

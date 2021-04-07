@@ -2,8 +2,8 @@ package com.dhlg.module.system.sysUser.service;
 
 import com.dhlg.module.system.sysUser.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dhlg.utils.common.Parameter;
-import com.dhlg.utils.common.Result;
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.utils.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -40,4 +40,6 @@ public interface ISysUserService extends IService<SysUser> {
     Result userUpdateUserInfo(SysUser sysUser);
 
     Result updatePassword(Parameter parameter);
+
+    void logout(HttpServletRequest request);
 }

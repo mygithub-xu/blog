@@ -5,17 +5,16 @@ import com.dhlg.module.system.sysMenu.entity.SysMenu;
 import com.dhlg.module.system.sysRole.entity.SysRole;
 import com.dhlg.module.system.sysRole.service.ISysRoleService;
 import com.dhlg.module.system.sysRole.service.impl.SysRolePermissionServiceImpl;
-import com.dhlg.utils.common.Result;
-import com.dhlg.utils.common.StringUtils;
-import com.dhlg.utils.common.exception.ParamIsNullException;
+import com.dhlg.utils.Result;
+import com.dhlg.utils.StringUtils;
+import com.dhlg.exception.ParamIsNullException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.dhlg.utils.common.Parameter;
+import com.dhlg.utils.Parameter.Parameter;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -69,7 +68,7 @@ public class SysRoleController {
 
     @RequiresPermissions("sysRole:delete")
     @ApiOperation("删除角色")
-    @PostMapping ("/deleteById/{id}")
+    @DeleteMapping ("/deleteById/{id}")
     public Result deleteById(@PathVariable String id) {
         if (StringUtils.isBlank(id)) {
             throw new ParamIsNullException();

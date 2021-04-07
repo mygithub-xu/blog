@@ -30,11 +30,11 @@
             and sdt.status = 1
             and sd.status = 1
         </where>
---         order by if(sdt.update_time is null ,sdt.create_time,sdt.update_time) desc
-        order by sd.dic_value asc
+        order by if(sdt.update_time is null ,sdt.create_time,sdt.update_time) desc
+
     </select>
 
-    <select id="pageDicType" parameterType="com.dhlg.utils.common.Parameter" resultMap="BaseResultMap">
+    <select id="pageDicType" parameterType="com.dhlg.utils.Parameter.Parameter" resultMap="BaseResultMap">
         select  * from sys_dic_type
         <trim prefix="where" prefixOverrides="and">
             <if

@@ -1,11 +1,11 @@
 package com.dhlg.module.blog.blogProject.controller;
 
+import com.dhlg.exception.ParamIsNullException;
 import com.dhlg.module.blog.blogProject.entity.BlogProject;
 import com.dhlg.module.blog.blogProject.service.IBlogProjectService;
-import com.dhlg.utils.common.Parameter;
-import com.dhlg.utils.common.Result;
-import com.dhlg.utils.common.StringUtils;
-import com.dhlg.utils.common.exception.ParamIsNullException;
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.utils.Result;
+import com.dhlg.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

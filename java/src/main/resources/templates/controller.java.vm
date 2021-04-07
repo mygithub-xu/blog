@@ -2,10 +2,10 @@ package $!{packageName}.module.$!{projectName}.$!{domainName}.controller;
 
 import $!{packageName}.module.$!{projectName}.$!{domainName}.entity.$!{DomainName};
 import $!{packageName}.module.$!{projectName}.$!{domainName}.service.I$!{DomainName}Service;
-import $!{packageName}.utils.common.Parameter;
-import $!{packageName}.utils.common.Result;
-import $!{packageName}.utils.common.StringUtils;
-import $!{packageName}.utils.common.exception.ParamIsNullException;
+import $!{packageName}.utils.Parameter;
+import $!{packageName}.utils.Result;
+import $!{packageName}.utils.StringUtils;
+import $!{packageName}.utils.exception.ParamIsNullException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

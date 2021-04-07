@@ -6,10 +6,10 @@ import $!{packageName}.module.$!{projectName}.$!{domainName}.entity.$!{DomainNam
 import $!{packageName}.module.$!{projectName}.$!{domainName}.dao.$!{DomainName}Mapper;
 import $!{packageName}.module.$!{projectName}.$!{domainName}.service.I$!{DomainName}Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import $!{packageName}.utils.common.Dictionaries;
-import $!{packageName}.utils.common.Parameter;
-import $!{packageName}.utils.common.Result;
-import $!{packageName}.utils.common.StringUtils;
+import $!{packageName}.utils.Dictionaries;
+import $!{packageName}.utils.Parameter;
+import $!{packageName}.utils.Result;
+import $!{packageName}.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

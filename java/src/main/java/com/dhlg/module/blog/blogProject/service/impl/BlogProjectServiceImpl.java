@@ -6,7 +6,8 @@ import com.dhlg.module.blog.blogProject.entity.BlogProject;
 import com.dhlg.module.blog.blogProject.dao.BlogProjectMapper;
 import com.dhlg.module.blog.blogProject.service.IBlogProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dhlg.utils.common.*;
+import com.dhlg.utils.*;
+import com.dhlg.utils.Parameter.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

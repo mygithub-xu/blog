@@ -2,40 +2,29 @@ package com.dhlg.module.system.sysUser.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.dhlg.utils.*;
 import com.dhlg.module.system.sysButton.entity.SysButton;
 import com.dhlg.module.system.sysButton.service.impl.SysButtonServiceImpl;
 import com.dhlg.module.system.sysMenu.entity.SysMenu;
 import com.dhlg.module.system.sysMenu.service.impl.SysMenuServiceImpl;;
-import com.dhlg.module.system.sysRole.entity.SysRole;
 import com.dhlg.module.system.sysUser.entity.SysUser;
 import com.dhlg.module.system.sysUser.dao.SysUserMapper;
 import com.dhlg.module.system.sysUser.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dhlg.utils.common.*;
-import com.dhlg.utils.common.exception.OperatorException;
-import com.dhlg.utils.common.exception.ParamIsNullException;
-import com.dhlg.utils.common.exception.UncheckedException;
-import com.dhlg.utils.shiro.token.PhoneToken;
-import com.dhlg.utils.shiro.utils.PasswordHelper;
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.exception.ParamIsNullException;
+import com.dhlg.exception.UncheckedException;
+import com.dhlg.redis.RedisUtil;
+import com.dhlg.shiro.utils.PasswordHelper;
 import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -56,69 +45,91 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired(required = false)
     SysMenuServiceImpl sysMenuService ;
 
-
     @Autowired(required = false)
     SysButtonServiceImpl buttonService;
 
     @Autowired
     VerificationProperty verificationProperty;
 
-    @Value("${sysuser.headPortraitSrc}")
-    private String headPortraitSrc;
+    @Autowired
+    private RedisUtil redisUtil;
 
-    final static String PASSWORD = "123456";
+    @Autowired
+    private PasswordHelper passwordHelper;
+
+    @Value("${common.fileDownSrc}")
+    private static String fileDownSrc;
+
+    @Value("${common.password}")
+    private String PASSWORD;
+
     @Override
     public Result login(String body, HttpServletRequest request) {
         Map<String, Object> dataMap = new HashMap<>();
         JSONObject jsonObject = JSONObject.fromObject(body);
-        Object username = jsonObject.get( "userName");
-        Object password = jsonObject.get( "passWord");
+        String username = jsonObject.get( "userName").toString();
+        String password = jsonObject.get( "passWord").toString();
         if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             throw new ParamIsNullException();
         }
-        Subject subject = SecurityUtils.getSubject();
-        try {
-            subject.login(new UsernamePasswordToken(username.toString(), password.toString()));
 
-            //shrio验证登入，410账户密码错误，411锁定
-        } catch (LockedAccountException e) {
-            //throw new LockedAccountException(" 该账号已被锁定！");
-            return new Result("411", request.getRequestURL(),"该账号已被锁定！");
-        } catch (AuthenticationException e) {
-            //throw new UnknownAccountException(" 账号或密码错误！");
-            return new Result("410", request.getRequestURL(), "账号或密码错误！");
+        //1. 校验用户是否有效
+        SysUser sysUser = findByName(username);
+        if (sysUser == null) {
+            return Result.error("用户不存在");
+        }
+        //2.校验用户密码
+        if(!sysUser.getPassword().equals(passwordHelper.checkPass(password ,sysUser.getSalt()))){
+            return Result.error("用户名或密码错误");
         }
 
-        subject = SecurityUtils.getSubject();
-        SysUser user =  GetLoginUser.getCurrentUser();
-        dataMap.put("user",user);
+        //3.保存token并返回
+        String token = saveToken(sysUser);
+        if ("".equals(token)){
+            return  new Result("500","","服务器错误");
+        }
+        dataMap.put("token",  token);
 
-        //获取树状menu
-        List<SysMenu> sysMenus=sysMenuService.findMenu(username.toString());
+        //4.返回用户数据
+        List<SysMenu> sysMenus=sysMenuService.findMenu(sysUser);
         sysMenus= InitTree.getRootNodes(sysMenus);
-        dataMap.put("menuData",sysMenus);
+        sysUser.setMenuData(sysMenus);
 
-        //String token = Tool.makeToken();
-        dataMap.put("token",  subject.getSession().getId());
-        if (!StringUtils.isBlank(user)){
-            dataMap.put("userId", user.getId());
-            Set<String> buttonUrlList= new HashSet<>();
-            List<SysButton> buttonList;
-            if (user.getLoginUser().equals("admin")){
-                //这里不允许重复，所以用set代替list
-                buttonList= buttonService.findAllButtonUrl();
-            }else {
-                buttonList= buttonService.findButtonUrl(user.getRoleIds());
-            }
-            for(SysButton sysMenu:buttonList){
-                if (!StringUtils.isBlank(sysMenu.getButtonUrl())){
-                    buttonUrlList.add(sysMenu.getButtonUrl());
-                }
-            }
-            dataMap.put("buttonUrlList", buttonUrlList);
+        Set<String> buttonUrlList= new HashSet<>();
+        List<SysButton> buttonList;
+        if ("admin".equals(sysUser.getLoginUser())){
+            //这里不允许重复，所以用set代替list
+            buttonList= buttonService.findAllButtonUrl();
+        }else {
+            buttonList= buttonService.findButtonUrl(sysUser.getRoleIds());
         }
+        for(SysButton sysMenu:buttonList){
+            if (!StringUtils.isBlank(sysMenu.getButtonUrl())){
+                buttonUrlList.add(sysMenu.getButtonUrl());
+            }
+        }
+        sysUser.setButtonUrlList(buttonUrlList);
+        dataMap.put("user",sysUser);
 
         return new Result("200",dataMap,"登入成功");
+    }
+
+    private String saveToken(SysUser sysUser) {
+        //保存token
+        String token = JwtUtil.sign(sysUser.getLoginUser(), sysUser.getPassword());
+        boolean set = redisUtil.set(Dictionaries.PREFIX_USER_TOKEN + token, token);
+        if (!set){
+            return "";
+        }
+        //将其缓存时间设置为比jwt大的时间，，这里设置为两倍 单位秒
+        redisUtil.expire(Dictionaries.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME * 2/ 1000);
+        SysUser vo = new SysUser();
+        //保存用户信息
+        BeanUtils.copyProperties(sysUser,vo);
+        redisUtil.set(Dictionaries.PREFIX_USER_ + token, vo);
+        redisUtil.expire(Dictionaries.PREFIX_USER_ + token, JwtUtil.EXPIRE_TIME * 2/ 1000);
+
+        return token;
     }
 
     @Override
@@ -138,7 +149,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (StringUtils.isBlank(sysUser.getId())){
             sysUser.setId(StringUtils.uuid());
             //新增,1.判断账号名是否重名
-
             boolean isRepeat=verificationProperty.lockAndVerify(sysUser, SysUser.LOGIN_USER,sysUser.getId());
             if (isRepeat){
                 throw new UncheckedException(Dictionaries.NAME_REPETITION,Dictionaries.NAME_REPETITION,Dictionaries.NAME_REPETITION);
@@ -215,7 +225,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPassword(PASSWORD);
         PasswordHelper passwordHelper = new PasswordHelper();
         passwordHelper.encryptPassword(sysUser);
-        if (!updateById(sysUser)) result.setBody(Dictionaries.RESET_PASSWORD_FAILED);
+        if (!updateById(sysUser)) {
+            result.setBody(Dictionaries.RESET_PASSWORD_FAILED);
+        }
         return result;
     }
 
@@ -229,14 +241,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Result queryHeadPortraitById(String id) {
             Result result = new Result();
             SysUser sysUser = super.getById(id);
-            //Base64解密图片
-//            if (StringUtils.isBlank(sysUser.getHeadPortrait())){
-//                sysUser.setHeadPortrait(ImgUtils.dealImgOfByte(headPortraitSrc));
-//            }
-//            byte[] bytes = new BASE64Decoder().decodeBuffer(new String(sysUser.getHeadPortrait()));
-//            String baseString = org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
-
-            result.setBody(sysUser.getHeadPortrait());
+            result.setBody(sysUser);
             return result;
     }
 
@@ -244,10 +249,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Result userUpdateUserInfo(SysUser sysUser) {
         if (StringUtils.isNotBlank(sysUser.getHeadPortraitSrc())) {
             //对base64进行转换
-            String url = uploadFileUtils.uploadImgByHead(sysUser.getHeadPortraitSrc());
+            String url = uploadFileUtils.uploadImgByHead(sysUser.getHeadPortraitSrc(),fileDownSrc);
             //通知更新了头像，将原有头像删除，保存现有头像-----交给mq
 
-            if (url.equals("-1")){
+            if ("-1".equals(url)){
                 return new Result("500","",Dictionaries.UPLOAD_ERROR);
             }
             sysUser.setHeadPortrait(url);
@@ -271,21 +276,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         //2.比较原密码是否正确
         SysUser sysUser = super.getById(id);
-        String code = verifyOldPasswordByName(sysUser, password).getCode();
-        if ("400".equals(code)) {
-            result.buildFailedResult(Dictionaries.OLD_PASSWORD_ERROR, Dictionaries.OLD_PASSWORD_ERROR,
-                    Dictionaries.OLD_PASSWORD_ERROR);
-            return result;
+        String pass = passwordHelper.checkPass(sysUser.getPassword(),sysUser.getSalt());
+        if (password.equals(pass)) {
+            return Result.error("原密码不正确");
         }
-
-        //3.修改密码
-        PasswordHelper passwordHelper = new PasswordHelper();
         SysUser sysObj = super.getById(id);
         //用户名
         sysUser.setId(id);
         sysUser.setUserName(sysObj.getUserName());
         sysUser.setLoginUser(sysObj.getLoginUser());
-        //新密码进行shiro加密
+        //新密码进行加密
         sysUser.setPassword(newPassword);
         //是否重置
         passwordHelper.encryptPassword(sysUser);
@@ -297,6 +297,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return result;
     }
 
+    @Override
+    public void logout(HttpServletRequest request) {
+        //清除redis缓存
+        String token = request.getHeader(Dictionaries.ACCESS_TOKEN);
+        if (StringUtils.isBlank(token)){
+            return;
+        }
+        //删除用户信息
+        redisUtil.del(Dictionaries.PREFIX_USER_TOKEN + token);
+        redisUtil.del(Dictionaries.PREFIX_USER_ + token);
+
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+    }
+
 
     public SysUser findByName(String loginUser) {
         //创建条件构造器
@@ -305,25 +320,5 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         queryWrapper_user.eq("login_user", loginUser).or().eq("mobile_phone",loginUser);
         return super.getOne(queryWrapper_user);
     }
-
-    //验证输入的密码是否正确
-    public Result verifyOldPasswordByName(SysUser user, String oldPassword) {
-
-        //把用户输入的密码加密
-        String correctPassword = new SimpleHash("md5",
-                oldPassword,
-                ByteSource.Util.bytes(user.getCredentialsSalt()),
-                2
-        ).toHex();
-
-        //把用户输入的密码加密后和数据库的密码比对
-        if (correctPassword.equals(user.getPassword())) {
-            return new Result("200", null, "密码输入正确");
-        }
-        return new Result("400", null, "密码输入错误");
-    }
-
-
-
 
 }

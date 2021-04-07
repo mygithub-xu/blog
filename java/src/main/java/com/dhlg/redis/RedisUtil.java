@@ -1,23 +1,17 @@
 package com.dhlg.redis;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
-import com.alibaba.fastjson.JSONObject;
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * 描述
@@ -25,132 +19,75 @@ import com.alibaba.fastjson.JSONObject;
  * Date:2020/4/19
  * Time:1:34
  */
-@SuppressWarnings("unchecked")
 @Component
 public class RedisUtil {
-    @SuppressWarnings("rawtypes")
-    @Autowired
-    private RedisTemplate redisTemplate;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
-     * 批量删除对应的value
-     *
-     * @param keys
+     * 存放缓存
      */
-    public void remove(final String... keys) {
-        for (String key : keys) {
-            remove(key);
-        }
-    }
-
-    /**
-     * 批量删除key
-     *
-     * @param pattern
-     */
-    public void removePattern(final String pattern) {
-        Set<Serializable> keys = redisTemplate.keys(pattern);
-        if (keys.size() > 0)
-            redisTemplate.delete(keys);
-    }
-
-    /**
-     * 删除对应的value
-     *
-     * @param key
-     */
-    public void remove(final String key) {
-        if (exists(key)) {
-            redisTemplate.delete(key);
-        }
-    }
-
-    /**
-     * 判断缓存中是否有对应的value
-     *
-     * @param key
-     * @return
-     */
-    public boolean exists(final String key) {
-        return redisTemplate.hasKey(key);
-    }
-
-    /**
-     * 读取缓存
-     *
-     * @param key
-     * @return
-     */
-    public String get(final String key) {
-        Object result = null;
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
-        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-        result = operations.get(key);
-        if (result == null) {
-            return null;
-        }
-        return result.toString();
-    }
-
-    /**
-     * 写入缓存
-     *
-     * @param key
-     * @param value
-     * @return
-     */
-    public boolean set(final String key, Object value) {
-        boolean result = false;
+    public boolean set(String key, Object value) {
         try {
-
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-            operations.set(key, value);
-            result = true;
+            redisTemplate.opsForValue().set(key, value);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return result;
     }
 
     /**
-     * 写入缓存
-     *
-     * @param key
-     * @param value
-     * @return
+     * 获取缓存
      */
-    public boolean set(final String key, Object value, Long expireTime) {
-        boolean result = false;
-        try {
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-            operations.set(key, value);
-            redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public Object get(String key) {
+        return key == null ? null : redisTemplate.opsForValue().get(key);
     }
 
-    public boolean hmset(String key, Map<String, String> value) {
-        boolean result = false;
-        try {
-            redisTemplate.opsForHash().putAll(key, value);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    /**
+     * 删除缓存
+     *
+     * @param key 可以传一个值 或多个
+     */
+    @SuppressWarnings("unchecked")
+    public void del(String... key) {
+        if (key != null && key.length > 0) {
+            if (key.length == 1) {
+                redisTemplate.delete(key[0]);
+            } else {
+                redisTemplate.delete(CollectionUtils.arrayToList(key));
+            }
         }
-        return result;
     }
 
-    public Map<String, String> hmget(String key) {
-        Map<String, String> result = null;
+    /**
+     * 指定缓存失效时间
+     */
+    public boolean expire(String key, long time) {
         try {
-            result = redisTemplate.opsForHash().entries(key);
+            if (time > 0) {
+                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return result;
     }
+
+    /**
+     * 根据key 获取过期时间
+     *
+     * @param key 键 不能为null
+     * @return 时间(秒) 返回0代表为永久有效
+     */
+    public long getExpire(String key) {
+        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+    }
+
+
+
 
 }

@@ -2,13 +2,17 @@ package com.dhlg.module.system.sysdic.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.dhlg.utils.DateUtils;
+import com.dhlg.utils.GetLoginUser;
+import com.dhlg.utils.Result;
+import com.dhlg.utils.StringUtils;
 import com.dhlg.module.system.sysdic.entity.Option;
 import com.dhlg.module.system.sysdic.entity.SysDic;
 import com.dhlg.module.system.sysdic.entity.SysDicType;
 import com.dhlg.module.system.sysdic.dao.SysDicTypeMapper;
 import com.dhlg.module.system.sysdic.service.ISysDicTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dhlg.utils.common.*;
+import com.dhlg.utils.Parameter.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +62,6 @@ public class SysDicTypeServiceImpl extends ServiceImpl<SysDicTypeMapper, SysDicT
         IPage<SysDicType> dicTypeList = sysDicTypeMapper.pageDicType(parameter.getPage(), parameter);
 
         return new Result(dicTypeList);
-
     }
 
     @Override
@@ -86,4 +89,10 @@ public class SysDicTypeServiceImpl extends ServiceImpl<SysDicTypeMapper, SysDicT
         return sysDicTypeMapper.getType(type);
 
     }
+
+    @Override
+    public Result getAll() {
+        return Result.success(list());
+    }
+
 }

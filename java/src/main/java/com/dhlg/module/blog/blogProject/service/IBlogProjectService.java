@@ -2,8 +2,9 @@ package com.dhlg.module.blog.blogProject.service;
 
 import com.dhlg.module.blog.blogProject.entity.BlogProject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dhlg.utils.common.Parameter;
-import com.dhlg.utils.common.Result;
+
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.utils.Result;
 
 import java.util.List;
 import java.util.Map;

@@ -3,11 +3,12 @@ package com.dhlg.module.system.sysButton.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dhlg.utils.*;
 import com.dhlg.module.system.sysButton.entity.SysButtonConfig;
 import com.dhlg.module.system.sysButton.dao.SysButtonConfigMapper;
 import com.dhlg.module.system.sysButton.service.ISysButtonConfigService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dhlg.utils.common.*;
+import com.dhlg.utils.Parameter.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +80,9 @@ public class SysButtonConfigServiceImpl extends ServiceImpl<SysButtonConfigMappe
             sysButtonConfig.setId(StringUtils.uuid());
             sysButtonConfig.setCreateUser(currentUserId);
             sysButtonConfig.setCreateTime(currentDate);
-            if (!super.save(sysButtonConfig)) result.setBody(Dictionaries.SAVE_FAILED);
+            if (!super.save(sysButtonConfig)) {
+                result.setBody(Dictionaries.SAVE_FAILED);
+            }
         } else {
             //更新
             SysButtonConfig oldButton = getById(sysButtonConfig.getId());
@@ -96,7 +99,9 @@ public class SysButtonConfigServiceImpl extends ServiceImpl<SysButtonConfigMappe
             result.setBody(Dictionaries.UPDATE_SUCCESS);
             sysButtonConfig.setUpdateUser(currentUserId);
             sysButtonConfig.setUpdateTime(currentDate);
-            if (!super.updateById(sysButtonConfig)) result.setBody(Dictionaries.UPDATE_FAILED);
+            if (!super.updateById(sysButtonConfig)) {
+                result.setBody(Dictionaries.UPDATE_FAILED);
+            }
         }
 
         verificationProperty.lockAndVerify(sysButtonConfig, SysButtonConfig.BUTTON_CODE, requestId);

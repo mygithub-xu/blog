@@ -3,11 +3,10 @@ package com.dhlg.module.system.sysButton.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dhlg.module.system.sysButton.entity.SysButtonConfig;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dhlg.utils.common.Parameter;
-import com.dhlg.utils.common.Result;
+import com.dhlg.utils.Parameter.Parameter;
+import com.dhlg.utils.Result;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <p>
