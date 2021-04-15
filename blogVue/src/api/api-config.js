@@ -1,5 +1,6 @@
 // 默认导出整个接口配置
 export default {
+  // 参数配置
   // 账号管理
   menu: `api/system/sysMenu/getnodelist`, // 菜单 // 账号管理 // 登陆
   excelImport: `api/system/sysLoginLog/excel`,//列表查询

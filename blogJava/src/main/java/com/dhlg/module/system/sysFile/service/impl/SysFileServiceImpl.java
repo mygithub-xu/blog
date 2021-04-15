@@ -34,6 +34,9 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
     @Value("${common.fileDownSrc}")
     private  String fileDownSrc;
 
+    @Value("${common.max-file-size}")
+    private  int maxFileSize;
+
     @Override
     public Result uploadFile(MultipartFile file) {
 
@@ -94,7 +97,12 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
     @Override
     public Result uploadFileMore(MultipartFile file,String type) {
-
+        if (StringUtils.isBlank(file)){
+            return Result.error("文件是空的");
+        }
+        if (file.getSize() > maxFileSize * 1024 * 1024){
+            return Result.error("文件大于"+maxFileSize+"m");
+        }
         //获取上传图片的路径
         String name = uploadFileUtils.uploadImg(file, fileNetSrc, fileDownSrc);
         SysFile sysFile = new SysFile();
@@ -111,9 +119,10 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
         sysFile.setName(substring);
 
         if (!save(sysFile)){
-            return new Result("400","",Dictionaries.UPLOAD_ERROR);
+
+            return Result.error(Dictionaries.UPLOAD_ERROR);
         }
-        return new Result("200",sysFile,Dictionaries.UPLOAD_SUCCESS);
+        return Result.success(Dictionaries.UPLOAD_SUCCESS);
 
     }
 
