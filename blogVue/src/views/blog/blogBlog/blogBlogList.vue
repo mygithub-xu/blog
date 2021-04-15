@@ -1,6 +1,7 @@
 <template>
     <div class="app-container">
-        <div class="container">
+        <el-scrollbar style="width:100%">
+        <div class="container-table">
             <!-- 区域一 查询区域 -->
             <div class="container_btn" >
             <span>
@@ -11,34 +12,10 @@
             </span>
             </div>
             <!-- 区域二---表格+分页 -->
-            <el-table :data="pageData.list" style="width: 100%" height="100%" :row-style="{height:'50px'}" border class="table" ref="multipleTable" align="center" @selection-change="handleSelectionChange" >
+            <div class="common-table-style">
+            <el-table :data="pageData.list"  border class="table" ref="multipleTable" align="center" @selection-change="handleSelectionChange" >
                 <el-table-column type="selection"  fixed width="45"  align="center" show-overflow-tooltip></el-table-column>
                 <el-table-column type="index" width="55" label="序号" align="center" v-if="xuhao" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="img" min-width="140" label="图片" align="center" show-overflow-tooltip>
-                                <template slot="header" slot-scope="scope">
-                                    <span class="col-filter">
-                                    {{scope.column.label}}
-                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.img">
-                                        <div>
-                                        <el-input
-                                                type="text"
-                                                v-model="condition.img"
-                                                placeholder="请输入"
-                                        ></el-input>
-                                        </div>
-                                        <hr
-                                                style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
-                                        />
-                                        <div style="display: flex; justify-content: space-evenly;">
-                                        <el-button type="text" @click="handleSimpleFilterOk('img')">确定</el-button>
-                                        <el-button type="text" @click="handleSimpleFilterCancel('img')">重置</el-button>
-                                        </div>
-                                        <i slot="reference" class="icon-filter"  @click.stop></i>
-                                    </el-popover>
-                                    </span>
-                                </template>
-
-                        </el-table-column>
                         <el-table-column prop="title" min-width="140" label="标题" align="center" show-overflow-tooltip>
                                 <template slot="header" slot-scope="scope">
                                     <span class="col-filter">
@@ -61,6 +38,41 @@
                                         <i slot="reference" class="icon-filter"  @click.stop></i>
                                     </el-popover>
                                     </span>
+                                </template>
+                        </el-table-column>
+                        <el-table-column prop="category" min-width="140" label="分类" align="center" show-overflow-tooltip>
+                                <template slot="header" slot-scope="scope">
+                                    <span class="col-filter">
+                                    {{scope.column.label}}
+                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.category">
+                                        <div>
+                                        <el-input
+                                                type="text"
+                                                v-model="condition.category"
+                                                placeholder="请输入"
+                                        ></el-input>
+                                        </div>
+                                        <hr
+                                                style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
+                                        />
+                                        <div style="display: flex; justify-content: space-evenly;">
+                                        <el-button type="text" @click="handleSimpleFilterOk('category')">确定</el-button>
+                                        <el-button type="text" @click="handleSimpleFilterCancel('category')">重置</el-button>
+                                        </div>
+                                        <i slot="reference" class="icon-filter"  @click.stop></i>
+                                    </el-popover>
+                                    </span>
+                                </template>
+
+                                <template slot-scope="scope">
+                                    <div >
+                                        <div v-for="item in checkBoxList.categoryList" :key="item.value">
+                                            <el-tag
+                                                    type="success"
+                                                    v-if="scope.row.category==item.value"
+                                            >{{item.label}}</el-tag>
+                                        </div>
+                                    </div>
                                 </template>
 
                         </el-table-column>
@@ -89,15 +101,15 @@
                                 </template>
 
                         </el-table-column>
-                        <el-table-column prop="url" min-width="140" label="地址" align="center" show-overflow-tooltip>
+                        <el-table-column prop="reading" min-width="140" label="阅读数量" align="center" show-overflow-tooltip>
                                 <template slot="header" slot-scope="scope">
                                     <span class="col-filter">
                                     {{scope.column.label}}
-                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.url">
+                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.reading">
                                         <div>
                                         <el-input
                                                 type="text"
-                                                v-model="condition.url"
+                                                v-model="condition.reading"
                                                 placeholder="请输入"
                                         ></el-input>
                                         </div>
@@ -105,8 +117,33 @@
                                                 style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
                                         />
                                         <div style="display: flex; justify-content: space-evenly;">
-                                        <el-button type="text" @click="handleSimpleFilterOk('url')">确定</el-button>
-                                        <el-button type="text" @click="handleSimpleFilterCancel('url')">重置</el-button>
+                                        <el-button type="text" @click="handleSimpleFilterOk('reading')">确定</el-button>
+                                        <el-button type="text" @click="handleSimpleFilterCancel('reading')">重置</el-button>
+                                        </div>
+                                        <i slot="reference" class="icon-filter"  @click.stop></i>
+                                    </el-popover>
+                                    </span>
+                                </template>
+
+                        </el-table-column>
+                        <el-table-column prop="likes" min-width="140" label="喜欢数量" align="center" show-overflow-tooltip>
+                                <template slot="header" slot-scope="scope">
+                                    <span class="col-filter">
+                                    {{scope.column.label}}
+                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.likes">
+                                        <div>
+                                        <el-input
+                                                type="text"
+                                                v-model="condition.likes"
+                                                placeholder="请输入"
+                                        ></el-input>
+                                        </div>
+                                        <hr
+                                                style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
+                                        />
+                                        <div style="display: flex; justify-content: space-evenly;">
+                                        <el-button type="text" @click="handleSimpleFilterOk('likes')">确定</el-button>
+                                        <el-button type="text" @click="handleSimpleFilterCancel('likes')">重置</el-button>
                                         </div>
                                         <i slot="reference" class="icon-filter"  @click.stop></i>
                                     </el-popover>
@@ -149,8 +186,68 @@
                                 </template>
 
                         </el-table-column>
+                        <el-table-column prop="updateTime" min-width="140" label="更新时间" align="center" show-overflow-tooltip>
+                                <template slot="header" slot-scope="scope">
+                                    <span class="col-filter">
+                                    {{scope.column.label}}
+                                    <el-popover placement="bottom-end" width="400" trigger="click"  v-model="queryVisible.updateTime">
+                                        <el-date-picker
+                                                v-model="condition.updateTime"
+                                                type="daterange"
+                                                align="right"
+                                                unlink-panels
+                                                range-separator="至"
+                                                start-placeholder="开始日期"
+                                                end-placeholder="结束日期"
+                                                :picker-options="pickerOptions"
+                                                value-format="yyyy-MM-dd HH:mm:ss"
+                                        ></el-date-picker>
+                                        <hr
+                                                style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
+                                        />
+                                        <div style="display: flex; justify-content: space-evenly;">
+                                        <el-button
+                                                type="text"
+                                                @click="handleDateRangeListFilterOk('updateTime')"
+                                        >确定</el-button>
+                                        <el-button
+                                                type="text"
+                                                @click="handleDateRangeListFilterCancel('updateTime')"
+                                        >重置</el-button>
+                                        </div>
+                                        <i slot="reference" class="icon-filter" @click.stop></i>
+                                    </el-popover>
+                                    </span>
+                                </template>
 
-                <el-table-column label="操作" fixed="right" min-width="160" align="center" show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column prop="coverImg" min-width="140" label="封面图" align="center" show-overflow-tooltip>
+                                <template slot="header" slot-scope="scope">
+                                    <span class="col-filter">
+                                    {{scope.column.label}}
+                                    <el-popover placement="bottom-end" width="200" trigger="click" v-model="queryVisible.coverImg">
+                                        <div>
+                                        <el-input
+                                                type="text"
+                                                v-model="condition.coverImg"
+                                                placeholder="请输入"
+                                        ></el-input>
+                                        </div>
+                                        <hr
+                                                style="background-color: lightgray; height: 1px; border: none; margin-top: 1em;"
+                                        />
+                                        <div style="display: flex; justify-content: space-evenly;">
+                                        <el-button type="text" @click="handleSimpleFilterOk('coverImg')">确定</el-button>
+                                        <el-button type="text" @click="handleSimpleFilterCancel('coverImg')">重置</el-button>
+                                        </div>
+                                        <i slot="reference" class="icon-filter"  @click.stop></i>
+                                    </el-popover>
+                                    </span>
+                                </template>
+
+                        </el-table-column>
+
+                <el-table-column label="操作" fixed="right" min-width="220" align="center" show-overflow-tooltip>
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-view" class="yellow"  @click="handlePre(scope.row)" >预览</el-button>
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.row)" >编辑</el-button>
@@ -158,14 +255,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+            </div>
             <div class="pagination">
                 <pagination :page-list="pageData" @pagesearch="handlePage"></pagination>
             </div>
         </div>
+        </el-scrollbar>
         <!-- 区域三---弹出框，覆盖全部 -->
-        <div class="showDialog">
+        <div class="show-dialog">
             <el-dialog  :visible.sync="editVisible"  :show-close="false" :modal="false" fullscreen>
-                <div class="dialogFix">
+                <div class="dialog-button">
                     <template v-if="!preVisiable">
                         <el-button type="primary" size="small"  @click="handleSave('form')">保 存</el-button>
                     </template>
@@ -176,62 +275,52 @@
                         <div style="margin-top: 42px;">
 
                             <el-form  ref="form" :model="form" :rules="rules" label-width="150px" size="small" style="margin-top:10px">
-                                            <!-- <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
-                                                <el-form-item label="图片" prop="img" style="width:35rem;height:32px">
-                                                        <template v-if="form.img">
-                                                            <img :src="form.img"  @click="openPhotoDig" style="height:100px;width:200px"/>
+                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
+                                                <el-form-item label="标题" prop="title" >
+                                                    <el-input v-model="form.title" :disabled="preVisiable"></el-input>
+                                                </el-form-item>
+                                            </el-col>
+
+                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
+                                                <el-form-item label="分类" prop="category" >
+                                                    <el-select v-model="form.category"  placeholder="请选择"  style="width:100%;" :disabled="preVisiable">
+                                                        <el-option
+                                                                v-for="item in checkBoxList.categoryList"
+                                                                :key="item.value"
+                                                                :label="item.label"
+                                                                :value="item.value"
+                                                        ></el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                            </el-col>
+
+                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
+                                                <el-form-item label="封面图" prop="coverImg" >
+                                                        <template v-if="form.coverImg">
+                                                            <img :src="form.coverImg"  @click="openPhotoDig" style="height:100px;width:200px"/>
                                                         </template>
                                                         <template v-else>
                                                             <el-button type="primary" size="small" @click="openPhotoDig">选择图片</el-button>
                                                         </template>
                                                 </el-form-item>
-                                            </el-col> -->
+                                            </el-col>
 
-
-
-
-                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
-                                                <el-form-item label="标题" prop="title" style="width:35rem;height:32px">
-                                                    <el-input v-model="form.title" :disabled="preVisiable"></el-input>
+                                            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" >
+                                                <el-form-item label="描述" prop="description">
+                                                    <el-input
+                                                    type="textarea"
+                                                    :autosize="{ minRows: 2, maxRows: 4}"
+                                                    placeholder="请输入内容"
+                                                    v-model="form.description">
+                                                    </el-input>
                                                 </el-form-item>
                                             </el-col>
 
-
-
-
-                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
-                                                <el-form-item label="描述" prop="description" style="width:35rem;height:32px">
-                                                    <el-input v-model="form.description" :disabled="preVisiable"></el-input>
+                                            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" >
+                                                <el-form-item label="内容" prop="content">
+                                                     <editor ref="myTextEditor" :value="form.content"  @onEditorChange="onEditorChange"></editor>
                                                 </el-form-item>
                                             </el-col>
-
-
-
-
-                                            <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
-                                                <el-form-item label="地址" prop="url" style="width:35rem;height:32px">
-                                                    <el-input v-model="form.url" :disabled="preVisiable"></el-input>
-                                                </el-form-item>
-                                            </el-col>
-
-
-
-
-                                            <!-- <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
-                                                <el-form-item label="创建时间" prop="createTime" style="max-width:35rem;height:32px">
-                                                    <el-date-picker
-                                                            :disabled="preVisiable"
-                                                            v-model="form.createTime"
-                                                            type="datetime"
-                                                            placeholder="选择日期时间"
-                                                            default-time="12:00:00"
-                                                            style="width:100%">
-                                                    </el-date-picker>
-                                                </el-form-item>
-                                            </el-col> -->
-
-
-
 
                             </el-form>
 
@@ -240,8 +329,7 @@
                 </el-row>
             </el-dialog>
         </div>
-
-<photoShow ref="photoView" @handleSure="handleSure"></photoShow>
+        <photoShow ref="photoView" @handleSure="handleSure"></photoShow>
     </div>
 </template>
 <script>
@@ -251,11 +339,15 @@
                 preVisiable:false,
                 condition: {
                     id: "",
-                        img: "",
                         title: "",
+                        content: "",
+                        category: "",
                         description: "",
-                        url: "",
+                        reading: "",
+                        likes: "",
                         createTime: [],
+                        updateTime: [],
+                        coverImg: "",
         },
             xuhao:true,
                     dicDisabled:true,
@@ -269,25 +361,80 @@
             multipleSelection:[],//选中的数据集合
                     form :{
                     id: "",
-                    img: "",
                     title: "",
+                    content: "",
+                    category: "",
                     description: "",
-                    url: "",
-                    createTime: "",
+                    reading: "",
+                    likes: "",
+                    coverImg: "",
             },
             editVisible:false,
             rules: {
-              
+                title: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                content: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                category: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                description: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                reading: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                likes: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
+                coverImg: [
+                    {
+                        required: true,
+                        message: "  ",
+                        trigger: "blur"
+                    }
+                ],
 
             },
             queryVisible:{
-                        img:false,
                         title:false,
+                        content:false,
+                        category:false,
                         description:false,
-                        url:false,
+                        reading:false,
+                        likes:false,
                         createTime:false,
+                        updateTime:false,
+                        coverImg:false,
             },
             checkBoxList:{
+                                categoryList:[],
             },
             pickerOptions: {
                 shortcuts: [
@@ -324,11 +471,24 @@
         },
 
         created(){
+
             this.getdata();
         },
         methods:{
-            handleSure(){
-
+            onEditorChange2(content){
+                this.form.description=content;
+            },
+            onEditorChange(content){
+                this.form.content=content;
+            },
+            handleSure(photoData){
+                if(!photoData){
+                    return this.$message({
+                    message: '请选择你要选择的图片',
+                    type: 'warning'
+                    });
+                }
+                this.form.coverImg=photoData.url;
             },
             openPhotoDig(){
                 this.$refs.photoView.dialogVisible=true;
@@ -337,9 +497,9 @@
             handleAdd(){
                 this.editVisible=true;
                 this.empty();
-                this.$nextTick(()=>{
-                    this.$refs.form.resetFields();
-                })
+                // this.$nextTick(()=>{
+                //     this.$refs.form.resetFields();
+                // })
             },
             //批量删除--不需要批量删除请将其注释，，
             handleDeleteBatch(){
@@ -353,7 +513,7 @@
                     type: "warning"
                 })
                         .then(() => {
-                    this.$http .post(this.api.blogProjectBatchDelete, deletebatch).then(res => {
+                    this.$http .post(this.api.blogBlogBatchDelete, deletebatch).then(res => {
                         if (res.data.code == "200") {
                     this.$message({
                         message: "批量删除数据成功",
@@ -403,9 +563,9 @@
                 this.editVisible=true;
                 this.preVisiable=false
                 this.form=row;
-                this.$nextTick(()=>{
-                    this.$refs.form.resetFields();
-                })
+                // this.$nextTick(()=>{
+                //     this.$refs.form.resetFields();
+                // })
             },
             //单个删除
             handleDelete(id){
@@ -416,7 +576,7 @@
                 })
                         .then(() => {
                     this.$http
-                    .delete(this.api.blogProjectDeletebyid + id).then(res => {
+                    .delete(this.api.blogBlogDeletebyid + id).then(res => {
                         if (res.data.code == "200") {
                     this.$message({
                         message: "删除数据成功",
@@ -449,11 +609,9 @@
                 this.$refs
                         .form.validate(valid => {if (valid) {
 
-                        if(!!this.form.createTime){
-                            var d=this.form.createTime;
-                            this.form.createTime=this.dateUtils(d);
-                        }
-                        this.$http.post(this.api.blogProjectSaveOrUpdate, this.form).then(res=> {
+
+                        this.$http
+                                .post(this.api.blogBlogSaveOrUpdate, this.form).then(res=> {
                             if (res.data.code == "200") {
                             this.$message
                                     .success(res.data.message);
@@ -474,35 +632,45 @@
             empty(){
                 this.form={
                     id: "",
-                    img: "",
                     title: "",
+                    content: "",
+                    category: "",
                     description: "",
-                    url: "",
+                    reading: "",
+                    likes: "",
                     createTime: "",
+                    updateTime: "",
+                    coverImg: "",
             };
                 this.condition= {
                     id: "",
-                            img: "",
-                            title: "",
-                            description: "",
-                            url: "",
-                            createTime: [],
+                    title: "",
+                    content: "",
+                    category: "",
+                    description: "",
+                    reading: "",
+                    likes: "",
+                    createTime: [],
+                    updateTime: [],
+                    coverImg: "",
             }
+            this.preVisiable=false
             },
 
             //获取下拉数据
             getxiala(){
                 //下拉数据模板
-                // this.$http
-                //        .get(this.api.dicTypeGetType + "orderStatus").then(res => {
-                //         if (res.data.code == 200) {
-                //             this.orderStatusList = res.data.body.map(item => ({
-                //                 label: item.label,
-                //                 value: parseInt(item.value),
-                //                 checked: false
-                //             }));;
-                // }
-                // });
+                this.$http
+                       .get(this.api.dicTypeGetType + "blogType").then(res => {
+                        if (res.data.code == 200) {
+                            this.checkBoxList.categoryList = res.data.body.map(item => ({
+                                label: item.label,
+                                value: item.value,
+                                checked: false
+                            }));;
+                        }
+                });
+
 
                 // this.$http
                 //     .post(this.api.appUserQueryByCondition, {
@@ -527,7 +695,7 @@
             //获取数据
             getTableData(){
                 this.$http
-                        .post(this.api.blogProjectListFieldQuery, {
+                        .post(this.api.blogBlogListFieldQuery, {
                             ...this.condition,
                             number: this.pageData.pageNumber,
                             size: this.pageData.pageSize

@@ -598,7 +598,7 @@ export default {
       // this.$http
       //        .get(this.api.dicTypeGetType + "orderStatus").then(res => {
       //         if (res.data.code == 200) {
-      //             this.orderStatusList = res.data.body.map(item => ({
+      //             this.orderStatusList = res.data.body.(item => ({
       //                 label: item.label,
       //                 value: parseInt(item.value),
       //                 checked: false

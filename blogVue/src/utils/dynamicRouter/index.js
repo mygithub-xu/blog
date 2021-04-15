@@ -4,13 +4,11 @@ import store from '@/store/index'
 import Layout from '@/components/layout/text'
 import page404 from '@/components/layout/page/404'
 import Dashboard from '@/views/modules/dashboard/Dashboard'
-// import oneTemplate from '@/views/modules/phoneModel/query'
 import User from "@/utils/common/UserContext"
 
 var getRouter = null //暂存菜单数据
 
 router.beforeEach((to, from, next) => {
-  debugger
   if(to.path.indexOf("/blog") != -1){
     return next();
   }
@@ -83,7 +81,7 @@ function filterAsyncRouter (routers) {
     },
     {
       path: "*",
-      redirect: "/"
+      redirect: "/404"
     },
   ]
 

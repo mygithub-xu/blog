@@ -31,8 +31,8 @@
     data() {
       return {
         form: {
-          userName: 'whfch',
-          passWord: 'whfch123',
+          userName: '',
+          passWord: '',
           fullscreenLoading:false
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
@@ -85,7 +85,6 @@
 
                 //更新头像
                 this.$message.success("登入成功");
-debugger
                 let indexPath = this.$store.state.tabRouter.indexTab;
                 console.log(this.$router);
                 this.$router.push("/page/Dashboard");
