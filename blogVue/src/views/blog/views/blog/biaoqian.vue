@@ -58,11 +58,10 @@
             });
         },
         getType(){
-            this.$http
-                .get(this.api.dicTypeGetType + "blogType").then(res => {
+            this.$http.get(this.api.dicTypeGetType + "blogType").then(res => {
                 if (res.data.code == 200) {
                     this.biaoqian = res.data.body;
-            }
+                }
             });
         },
         //页数
@@ -86,10 +85,18 @@
 </script>
 <style scoped>
     .pagination2{
-        float: right;
-        bottom: 30px;
-        right: 67px;
-        position: absolute;
+      width: auto;
+      bottom: 60px;
+      right: 20px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .el-pagination{
+      padding: 10px 50px;
+      margin-right: 50px;
+      background-color: white;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
     }
     .tabContent{
         width:100%;

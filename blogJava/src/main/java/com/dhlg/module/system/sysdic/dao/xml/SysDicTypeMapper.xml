@@ -30,7 +30,7 @@
             and sdt.status = 1
             and sd.status = 1
         </where>
-        order by if(sdt.update_time is null ,sdt.create_time,sdt.update_time) desc
+        ORDER BY value
 
     </select>
 

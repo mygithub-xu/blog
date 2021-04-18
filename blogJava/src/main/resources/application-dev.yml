@@ -75,26 +75,12 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-#  mail:
-#    from: 2740835057@qq.com
-#    nickname: true
-#    password: wioqltexuiezdejc
-#    mailHost: smtp.qq.com
-#    port: 587
 
 shiro:
   # 加密算法
   algorithmName: "md5"
   # hash 次数
   hashIterations: 2
-
-
-#showSql
-logging:
-  level:
-    com:
-      example:
-        mapper : debug
 
 common:
   password: 123456 #默认密码

@@ -10,7 +10,7 @@
         <template v-else>
             无blog
         </template>
-        <div style="height:150px;width:100%"></div>
+        <div style="height:50px;width:100%"></div>
           <div class="pagination2">
             <pagination :page-list="pageData" @pagesearch="handlePage"></pagination>
           </div>
@@ -23,7 +23,6 @@
 <script>
 
 export default {
-    
     data() {
       return {
         pageData: {
@@ -41,13 +40,6 @@ export default {
         this.getdata();
     },
     methods: {
-      // openBlog(content){
-      //   this.content=content;
-      //   this.editVisible=true;
-      // },
-      // closeBlog(){
-      //   this.editVisible=false;
-      // },
       getdata() {
             this.$http
             .post(this.api.blogBlogQueryByCondition, {
@@ -78,9 +70,16 @@ export default {
 
 <style scoped>
     .pagination2{
-        bottom: 60px;
-        position: absolute;
-        right: 20px;
-        
+      width: auto;
+      bottom: 60px;
+      right: 20px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .el-pagination{
+      padding: 10px 50px;
+      background-color: white;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
     }
 </style>
