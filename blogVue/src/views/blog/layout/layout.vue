@@ -1,26 +1,40 @@
 <template>
     <div class="blogContain">
-      <div class="mainHeadin"><loHead></loHead></div>
-      <el-scrollbar  class="mainPage">
-          <transition name="fade-transform" mode="out-in">
-            <router-view></router-view>
-          </transition>
-         <loFooter class="footer"></loFooter>
-      </el-scrollbar>
-    </div>
+      
+      <template v-if="isMobile">
+        <div><loHead isMobile></loHead></div>
+        <el-scrollbar>
+            <transition name="fade-transform" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          <loFooter class="footer"></loFooter>
+        </el-scrollbar>
+      </template>
+      <template v-else>
+        <div class="mainHeadin"><loHead></loHead></div>
+
+        <el-scrollbar  class="mainPage">
+            <transition name="fade-transform" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          <loFooter class="footer"></loFooter>
+        </el-scrollbar>
+      </template>
+      </div>
+    
 </template>
 <script>
   export default {
     data() {
       return {
         avatar:"",
-        activeIndex: '1',
-        activeIndex2: '1'
+        // 默认pc端
+        isMobile:false
       }
     },
     mounted(){
       // 判断是否为手机
-
+      this.isMobile = this.$utils._isMobile()
     },
     methods: {
     }
@@ -40,15 +54,11 @@
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
-.blogContain{
-  // width: 100%;
-  // height: 100%;
-}
 .mainPage{
   width: 100%;
   margin: 0 auto;
+  height: calc(100% - 61px);
   background-color: #f3f3f3;
-  height: calc(100% - 61px)
 }
 .mainHead{
   height: 60px;

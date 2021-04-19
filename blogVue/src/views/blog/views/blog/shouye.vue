@@ -1,22 +1,32 @@
 <template>
-    <div class="common_blog">
-      <div>
-        <template v-if="pageData.list">
-        <div class="blogItem-body" style="position: relative;">
-            <blogItem :list="pageData.list" width="900" ></blogItem> 
+    <div class="bl-view">
+      <template v-if="isMobile">
+        <div style="width:100%">
+          <template v-if="pageData.list">
+          <div class="blogItem-body">
+            <div class="blog-body"  v-for="item in pageData.list" :key="item.id">
+                <blogItemPC :item="item"></blogItemPC> 
+            </div>
+          </div>
+          </template>
+            <pagination class="pagination3" :page-list="pageData" @pagesearch="handlePage"></pagination>
         </div>
-            
-        </template>
-        <template v-else>
-            无blog
-        </template>
-        <div style="height:50px;width:100%"></div>
+      </template>
+      <template v-else>
+        <div class="common_blog">
+          <template v-if="pageData.list">
+          <div class="blogItem-body">
+            <div class="blog-body"  v-for="item in pageData.list" :key="item.id">
+                <blogItem :item="item"></blogItem> 
+            </div>
+          </div>
+          </template>
           <div class="pagination2">
             <pagination :page-list="pageData" @pagesearch="handlePage"></pagination>
           </div>
-      </div>
-        <!-- <blogContent :editVisible="editVisible" :content="content" @closeBlog="closeBlog">
-        </blogContent> -->
+        </div>
+      </template>
+
     </div>
 </template>
 
@@ -33,11 +43,16 @@ export default {
             totalPage: 0
         },
         editVisible:false,
-        content:""
-      };
+        content:"",
+        isMobile:false
+      }
     },
     created(){
         this.getdata();
+    },
+    mounted(){
+      // 判断是否为手机
+      this.isMobile = this.$utils._isMobile()
     },
     methods: {
       getdata() {
@@ -71,15 +86,20 @@ export default {
 <style scoped>
     .pagination2{
       width: auto;
-      bottom: 60px;
-      right: 20px;
       display: flex;
       justify-content: flex-end;
       margin-bottom: 20px;
+      margin-top: 50px;
     }
     .el-pagination{
       padding: 10px 50px;
       background-color: white;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    }
+    .pagination3{
+      width: auto;
+      display: flex;
+      justify-content: center;
+      margin: 20px 10px;
     }
 </style>

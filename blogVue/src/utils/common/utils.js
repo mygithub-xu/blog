@@ -41,8 +41,13 @@ export default {
     let deletebatch = []
     list.forEach(i => {
       deletebatch.push(i.id)
-    });
+    })
     return deletebatch
+  },
+  // 判断是否为手机 true是手机端
+  _isMobile() {
+    let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    return flag;
   }
 
 }

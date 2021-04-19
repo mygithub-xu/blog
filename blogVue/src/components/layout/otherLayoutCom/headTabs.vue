@@ -1,15 +1,5 @@
 <template>
     <div class="headTabsDivCom" id="headTabsDivCom">
-        
-        <!-- <el-tabs v-model="indexTabTrue" closable  type="border-card"  @tab-remove="removeTab" @tab-click="tabclick" @contextmenu.prevent.native="openpop($event)">
-            <el-tab-pane
-                v-for="item in getOpenTab"
-                :key="item.path"
-                :label="item.name"
-                :name="item.path">
-            </el-tab-pane>
-        </el-tabs> -->
-
         <div v-show="isShowSide" class="tab-left el-icon-arrow-left" @click="goLeft"></div> 
         
         <div id="tab-comp" class="tab-comp" :style="{'margin-left':tableft+'px'}">

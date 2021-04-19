@@ -1,23 +1,24 @@
 <template>
       <div class="lo-dh">
-        <div class="lo-avatar">
-              <img class="lo-dh-img" src="@/assets/img/avatar.png"/>
-        </div>
-        <div class="lo-menu">
-          <div class="lo-menu-item">
-            <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" unique-opened router>
-              <el-menu-item index="/blog/shouye" >首页</el-menu-item>
-              <el-menu-item index="/blog/biaoqian" >标签</el-menu-item>
-              <el-menu-item index="/blog/guidang" >归档</el-menu-item>
-              <el-menu-item index="/blog/xiangmu" >项目</el-menu-item>
-              <el-menu-item index="/blog/liuyan" >留言</el-menu-item>
-              <el-menu-item index="/blog/guanyu" >我的</el-menu-item>
-              <el-menu-item index="/login">
-                <div class="el-icon-position"></div>
-              </el-menu-item>
-            </el-menu>
+        <template v-if="isMobile">
+          <i class="icon iconfont icon-zhedie1"></i>
+          <span class="lo-welcome">欢迎啊~</span>
+        </template>
+        <template v-else>
+          <div class="lo-avatar">
+                <img class="lo-dh-img" src="@/assets/img/avatar.png"/>
           </div>
-        </div>
+          <div class="lo-menu">
+            <div class="lo-menu-item">
+              <el-menu :default-active="activeIndex" mode="horizontal" unique-opened router>
+                <el-menu-item v-for="item in routerList" :key="item.index" :index="item.index" >{{item.name}}</el-menu-item>
+                <el-menu-item index="/login">
+                  <div class="el-icon-position"></div>
+                </el-menu-item>
+              </el-menu>
+            </div>
+          </div>
+        </template>
       </div>
 </template>
 <script>
@@ -27,19 +28,28 @@ export default {
       return {
         avatar:"",
         activeIndex: '/blog/shouye',
-
-      };
+        routerList:[
+          {index:'/blog/shouye',name:'首页'},
+          {index:'/blog/biaoqian',name:'标签'},
+          {index:'/blog/guidang',name:'归档'},
+          {index:'/blog/xiangmu',name:'项目'},
+          {index:'/blog/liuyan',name:'留言'},
+          {index:'/blog/guanyu',name:'我的'},
+        ]
+      }
+    },
+    props:{
+      isMobile:{
+        type: Boolean,
+        default: false
+      }
     },
     methods: {
-      handleSelect(key, keyPath) {
-        
-      }
     }
 }
 </script>
 <style  scoped>
 .lo-dh{
-  width: 1000px;
   height: auto;
   margin: 0 auto;
   display: flex;
@@ -60,17 +70,20 @@ export default {
   display: flex;
   justify-content: center;
 }
-
-/* .lo-dh>ul{
-  padding-right: 100px;
-} */
 .lo-dh>ul>li{
   margin-right: 10px;
 }
-.lo-lbt{
-  height: 700px;
-}
 .el-menu.el-menu--horizontal{
   border-bottom: 0px solid #f3f3f3;
+}
+.icon-zhedie1{
+  font-size: 35px;
+  line-height: 60px;
+}
+.lo-welcome{
+  width: 100%;
+  line-height: 60px;
+  margin-left: 50px;
+  font-size: 23px;
 }
 </style>

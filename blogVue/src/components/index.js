@@ -5,6 +5,7 @@ import loFooter from '@/views/blog/layout/components/loFooter';
 import blogItem from '@/views/blog/layout/components/blogItem';
 import blogContent from '@/views/blog/layout/components/blogContent';
 import commentCom from '@/views/blog/layout/components/commentCom';
+import blogItemPC from '@/views/blog/layout/components/blogItemPC';
 
 // 存放一些全局的组件
 import editComp from '@/components/common/editComp.vue';//树形
@@ -42,7 +43,8 @@ const components = [
   loFooter,
   blogItem,
   blogContent,
-  commentCom
+  commentCom,
+  blogItemPC
 ];
 
 export default function(Vue, opts = {}) {

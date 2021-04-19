@@ -11,38 +11,31 @@
             <div class="blog-meta">
                 <span class="blog-time">
                     <span class="icon iconfont icon-rili"></span>
-                    <span>发表于</span>
                     <span>{{item.createTime}}</span>
                 </span>
                 <span class="blog-category">
                     <span class="blog-divider">|</span>
                     <span class="icon iconfont icon-tubiao-"></span>
-                    <span >分类于</span>
                     <span>{{item.category}}</span>
                 </span>
                 <span class="blog-read">
                     <span class="blog-divider">|</span>
                     <span class="icon iconfont icon-tubiaozhizuomoban"></span>
-                    <span >阅读数</span>
                     <span>{{item.reading}}</span>
                 </span>
                 <span class="blog-like">
                     <span class="blog-divider">|</span>
                     <span class="icon iconfont icon-xihuan"></span>
-                    <span >喜欢数</span>
                     <span>{{item.like}}</span>
                 </span>
             </div>
-        </div>
-        <div class="blog-cover-image">
-            <img :src="item.coverImg" alt="图片未找到" style="height:200px;width:200px"/>
         </div>
     </div>
 </div>
 </template>
 <script>
 export default {
-    name:"blogItem",
+    name:"blogItemPC",
     data() {
       return {
 
@@ -78,36 +71,29 @@ export default {
         background-color: #ffffff;
         padding: 10px 20px;
         box-shadow:  0 2px 12px 0 rgba(0,0,0,.1);
-        min-height: 220px;
-        width: 80%;
-        margin-left: 10%;
+        min-height: 200px;
+        margin: 10px 10px;
     }
-    
     .blog-title{
         height: 73px;
-        width: 720px;
-        
+        width: 100%;
     }
     .blog-title .title{
         margin-top: 20px;
-        display: inline-block;
-        /* position: relative; */
         color: #555;
-        font-size: 26px;
+        font-size: 22px;
         line-height: 1.2;
         vertical-align: top;
     }
     .blog-meta{
-        /* position:absolute; */
         height: 24px;
-        width: 720px;
+        width: 100%;
         color: #999;
         font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
         font-size: 12px;
     }
     .blog-like{
-        /* height: 163px; */
-        width: 720px;
+        width: 100%;
         margin-bottom: 20px;
     }
     .blog-cover-image{
@@ -135,7 +121,7 @@ export default {
     }
     .blog-header{
         float: left;
-        width: 70%;
+        width: 100%;
         height: 200px;
     }
 </style>

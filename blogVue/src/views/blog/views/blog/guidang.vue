@@ -1,17 +1,17 @@
 <template>
-    <div class="common_blog">
+  <div class="common_blog">
   <div class="block">
-  <el-timeline>
-    <el-timeline-item  placement="top" v-for="item in pageData.list" :key="item.id" :timestamp="item.createTime">
-      <el-card class="blogCard">
-        <h3>{{item.title}}</h3>
-        <p>{{item.description}}</p>
-        <p> 发布于 {{item.createTime}}</p>
-      </el-card>
-    </el-timeline-item>
-  </el-timeline>
-</div>
-    </div>
+    <el-timeline>
+      <el-timeline-item  placement="top" v-for="item in pageData.list" :key="item.id" :timestamp="item.createTime">
+        <el-card class="blogCard">
+          <h3>{{item.title}}</h3>
+          <p>{{item.description}}</p>
+          <p> 发布于 {{item.createTime}}</p>
+        </el-card>
+      </el-timeline-item>
+    </el-timeline>
+  </div>
+  </div>
 </template>
 <script>
 export default {

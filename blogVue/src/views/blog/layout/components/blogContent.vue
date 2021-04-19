@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="bl-view">
         <el-dialog  :visible.sync="editVisible"  :show-close="false" :modal="false" fullscreen>
             
             <div class="dialog-blog">
