@@ -7,6 +7,7 @@ import com.dhlg.utils.Result;
 import com.dhlg.utils.StringUtils;
 import com.dhlg.exception.ParamIsNullException;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/blog/blogBlog")
 @CrossOrigin
+@Slf4j
 public class BlogBlogController {
 
         @Autowired
@@ -61,6 +63,9 @@ public class BlogBlogController {
                 if(StringUtils.isBlank(parameter)){
                         throw new ParamIsNullException();
                 }
+                log.info("123");
+                log.error("456");
+                log.warn("789");
                 return  doService.queryByCondition(parameter);
         }
 

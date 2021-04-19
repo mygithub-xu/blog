@@ -1,8 +1,6 @@
 <template>
     <div class="blogContain">
-    <div class="mainHead">
       <div class="mainHeadin"><loHead></loHead></div>
-    </div>
       <el-scrollbar  class="mainPage">
           <transition name="fade-transform" mode="out-in">
             <router-view></router-view>
@@ -10,8 +8,6 @@
          <loFooter class="footer"></loFooter>
       </el-scrollbar>
     </div>
-
-    
 </template>
 <script>
   export default {
@@ -20,12 +16,13 @@
         avatar:"",
         activeIndex: '1',
         activeIndex2: '1'
-      };
+      }
+    },
+    mounted(){
+      // 判断是否为手机
+
     },
     methods: {
-      handleSelect(key, keyPath) {
-        // console.log(key, keyPath);
-      }
     }
   }
 </script>
@@ -44,16 +41,14 @@
   background-color: #d3dce6;
 }
 .blogContain{
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
 }
 .mainPage{
-  margin-top: 61px!important;
   width: 100%;
   margin: 0 auto;
   background-color: #f3f3f3;
-
-  height: 100%;
+  height: calc(100% - 61px)
 }
 .mainHead{
   height: 60px;
@@ -66,8 +61,8 @@
   background-color: #ffffff;
 }
 .mainHeadin{
-  width: 1400px;
-  margin: 0 auto;
+  width: 60%;
+  margin-left: 20%;
   height: 60px;
   border-bottom: 1px solid #f3f3f3;
 }

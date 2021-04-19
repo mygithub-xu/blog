@@ -2,14 +2,14 @@
 <div >
     <div class="mine">
         <div class="tim-content qqpc" :style="{'height':screeHeight+'px'}">
-            <div class="title" v-bind:style="{'position':titlePositon,'background-color': titleColor,'border-bottom':titleBorder }">
-                <div class="zhezhao"></div>
+            <div class="title" v-bind:style="{'background-color': titleColor,'border-bottom':titleBorder }">
+                <div class="zhezhao">
                 <div class="firstDiv">
                     <h2>About me</h2>
                     <p>Hi,I'm Jingbo Xu,</p><br>
                     <p>A java programmer</p>
                 </div>
-                
+                </div>
             </div>
             <div class="circle"></div>
         </div>
@@ -204,7 +204,7 @@ export default {
 }
 .title {
     width: 100%;
-    height: 75px;
+    height: 100%;
     position: static;
     background-color: transparent;
     z-index: 10;
@@ -271,7 +271,6 @@ export default {
     position: relative;
 }
 .qqpc .zhezhao{
-    position: absolute;
     content: "";
     width: 100%;
     height: 100%;
