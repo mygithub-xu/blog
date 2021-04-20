@@ -130,20 +130,12 @@
   width: 100%;
 }
 .common_blog{
-  width: 100%;
+  width: 60%;
+  margin-left: 20%;
   margin-top: 10px;
 }
+.bl-view{
+  width: 100%;
+  background-color: #f3f3f3;
+}
 
-@media screen and (max-width:600px){
-  .bl-view{
-    width: 100%;
-    background-color: #f3f3f3;
-  }
-}
-@media screen and (min-width:600px){
-  .bl-view{
-    width: 60%;
-    margin-left: 20%;
-    background-color: #f3f3f3;
-  }
-}

@@ -4,7 +4,9 @@
             <el-tab-pane v-for="item in biaoqian" :key="item.value" :label="item.label"  :name="item.value" >
                 <div class="tabContent" >
                     <template v-if="pageData.list">
-                        <blogItem :list="pageData.list" width="800"></blogItem> 
+                        <div class="blog-body"  v-for="item in pageData.list" :key="item.id">
+                            <blogItem :item="item"></blogItem> 
+                        </div>
                     </template>
                     <template v-else>
                         <span>无blog</span>

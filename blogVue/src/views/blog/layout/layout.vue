@@ -8,14 +8,6 @@
             </transition>
           <loFooter class="footer"></loFooter>
         </el-scrollbar>
-      <el-drawer
-        title="我是标题"
-        direction="ltr"
-        :visible.sync="drawerStatus"
-        :with-header="false"
-        size="150px">
-        <span>我来啦!</span>
-      </el-drawer>
       </template>
       <template v-else>
         <div class="mainHeadin"><loHead></loHead></div>
@@ -43,8 +35,8 @@
       this.isMobile = this.$utils._isMobile()
     },
     methods: {
-      openDrawer(data){
-        this.drawerStatus = data
+      openDrawer(){
+        this.drawerStatus = true
       }
     }
   }

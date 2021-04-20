@@ -1,7 +1,14 @@
 <template>
       <div class="lo-dh">
         <template v-if="isMobile">
-          <i class="icon iconfont icon-zhedie1" @click="openDrawer"></i>
+          <el-dropdown trigger="click" @command="handleCommand">
+            <span class="el-dropdown-link">
+              <i class="icon iconfont icon-zhedie1"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="item in routerList" :key="item.index" divided :command="item.index">{{item.name}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
           <span class="lo-welcome">欢迎啊~</span>
         </template>
         <template v-else>
@@ -46,9 +53,8 @@ export default {
       }
     },
     methods: {
-      openDrawer(){
-        this.drawerStatus = !this.drawerStatus
-        this.$emit('openDrawer',this.drawerStatus)
+      handleCommand(command){
+         this.$router.push(command);
       }
     }
 }
@@ -90,5 +96,11 @@ export default {
   line-height: 60px;
   margin-left: 50px;
   font-size: 23px;
+}
+.el-dropdown-menu--small .el-dropdown-menu__item {
+    line-height: 50px;
+    padding: 0 15px;
+    font-size: 20px;
+    width: 150px;
 }
 </style>
