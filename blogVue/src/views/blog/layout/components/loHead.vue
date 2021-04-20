@@ -1,7 +1,7 @@
 <template>
       <div class="lo-dh">
         <template v-if="isMobile">
-          <i class="icon iconfont icon-zhedie1"></i>
+          <i class="icon iconfont icon-zhedie1" @click="openDrawer"></i>
           <span class="lo-welcome">欢迎啊~</span>
         </template>
         <template v-else>
@@ -35,7 +35,8 @@ export default {
           {index:'/blog/xiangmu',name:'项目'},
           {index:'/blog/liuyan',name:'留言'},
           {index:'/blog/guanyu',name:'我的'},
-        ]
+        ],
+        drawerStatus: false
       }
     },
     props:{
@@ -45,6 +46,10 @@ export default {
       }
     },
     methods: {
+      openDrawer(){
+        this.drawerStatus = !this.drawerStatus
+        this.$emit('openDrawer',this.drawerStatus)
+      }
     }
 }
 </script>

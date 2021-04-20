@@ -1,18 +1,24 @@
 <template>
     <div class="blogContain">
-      
       <template v-if="isMobile">
-        <div><loHead isMobile></loHead></div>
-        <el-scrollbar>
+        <div><loHead isMobile @openDrawer="openDrawer"></loHead></div>
+        <el-scrollbar class="mainPage">
             <transition name="fade-transform" mode="out-in">
               <router-view></router-view>
             </transition>
           <loFooter class="footer"></loFooter>
         </el-scrollbar>
+      <el-drawer
+        title="我是标题"
+        direction="ltr"
+        :visible.sync="drawerStatus"
+        :with-header="false"
+        size="150px">
+        <span>我来啦!</span>
+      </el-drawer>
       </template>
       <template v-else>
         <div class="mainHeadin"><loHead></loHead></div>
-
         <el-scrollbar  class="mainPage">
             <transition name="fade-transform" mode="out-in">
               <router-view></router-view>
@@ -21,7 +27,6 @@
         </el-scrollbar>
       </template>
       </div>
-    
 </template>
 <script>
   export default {
@@ -29,7 +34,8 @@
       return {
         avatar:"",
         // 默认pc端
-        isMobile:false
+        isMobile:false,
+        drawerStatus:false
       }
     },
     mounted(){
@@ -37,6 +43,9 @@
       this.isMobile = this.$utils._isMobile()
     },
     methods: {
+      openDrawer(data){
+        this.drawerStatus = data
+      }
     }
   }
 </script>
