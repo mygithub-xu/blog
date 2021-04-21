@@ -5,20 +5,31 @@
                 <div class="tabContent" >
                     <template v-if="pageData.list">
                         <div class="blog-body"  v-for="item in pageData.list" :key="item.id">
-                            <blogItem :item="item"></blogItem> 
+                            <template v-if="isMobile">
+                                <blogItemPC :item="item"></blogItemPC> 
+                            </template>
+                            <template v-else>
+                                <blogItem :item="item"></blogItem> 
+                            </template>
                         </div>
                     </template>
                     <template v-else>
                         <span>无blog</span>
                     </template>
-                    <div style="height:120px;width:100%"></div>
-                    <div class="pagination2">
-                        <pagination :page-list="pageData" @pagesearch="handlePage"></pagination>
-                    </div>
                 </div>
             </el-tab-pane>
         </el-tabs>
-
+        <div>
+            <template v-if="isMobile">
+                <pagination class="pagination3" :page-list="pageData" @pagesearch="handlePage"></pagination>
+            </template>
+            <template v-else>
+                <div class="pagination2">
+                    <pagination :page-list="pageData" @pagesearch="handlePage"></pagination>
+                </div>
+            </template>
+            
+        </div>
     </div>
 </template>
 <script>
@@ -35,11 +46,15 @@
             totalCount: 0,
             totalPage: 0
         },
-      };
+        isMobile:false
+      }
     },
     created(){
         this.getType();
         this.getData();
+    },
+    mounted(){
+        this.isMobile = this.$utils._isMobile()
     },
     methods: {
         getData(){
@@ -105,5 +120,18 @@
         min-height:500px;
         margin-left:50px;
         position: relative;
+    }
+    .pagination3{
+        width: auto;
+        display: flex;
+        justify-content: center;
+        margin: 20px 10px;
+    }
+    @media screen and (max-width:600px){
+        .tabContent{
+            width: 100%;
+            margin-left: 0px;
+        }
+    
     }
 </style>

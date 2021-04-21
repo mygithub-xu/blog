@@ -181,8 +181,6 @@ export default {
   width: 700px;
   margin: 0 auto;
 }
-
-
 .liuyanjilv{
   width: 700px;
   min-height: 700px;
@@ -198,5 +196,16 @@ export default {
   margin-bottom: 20px;
   padding: 10px 15px;
   
+}
+@media screen and (max-width:600px){
+.common_body{
+    width: 100%;
+}
+.liuyan{
+    width: 300px;
+}
+.commentCom{
+  width: 100%;
+}
 }
 </style>

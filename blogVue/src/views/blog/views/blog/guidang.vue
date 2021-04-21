@@ -67,4 +67,13 @@ export default {
 .blogCard p{
     margin-top: 15px;
 }
+@media screen and (max-width:600px){
+.block {
+    margin-left: 0px;
+    padding-right: 10px;
+}
+.blogCard{
+  width: 100%;
+}
+}
 </style>

@@ -136,17 +136,24 @@ export default {
 .box-time span{
     font-size: 15px;
 }
-/* .box-items .box-git-url{
-    font-weight: 100;
-    font-size: 15px;
-    margin-bottom: 15px;
-    color: #ffffff;
+@media screen and (max-width:600px){
+.xm-header .bgimg{
+    height: 270px;
+    width: 100%;
 }
-.box-items .box-web-url{
-    font-weight: 100;
-    font-size: 15px;
-    margin-bottom: 15px;
-    color: #ffffff;
-} */
-
+.xm-header{
+    height: 270px;
+}
+.xm-header-jitang{
+    top: 100px;
+}
+.box-card{
+    width: 80%;
+    margin-left: 10%;
+    height: 140px;
+}
+.box-items{
+    margin-top: 20px;
+}
+}
 </style>

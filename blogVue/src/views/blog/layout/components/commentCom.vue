@@ -64,15 +64,13 @@ export default {
 </script>
 <style scoped>
     .comment-body{
-        /* margin-top: 10px;
-        margin-bottom: 10px; */
-        min-height: 120px;
-        /* border-bottom: 0.5px solid #f3f3f3; */
+      min-height: 120px;
     }
     .comment-header{
       min-height: 120px;
-      width: 10%;
+      width: 40px;
       float: left;
+      margin-right: 10px;
     }
     .comment-header img{
       height: 40px;
@@ -81,7 +79,7 @@ export default {
     }
     .comment-other{
       min-height: 120px;
-      width: 90%;
+      width: calc(100% - 50px);
       float: left;
     }
     .comment-child{
