@@ -6,8 +6,10 @@ import App from './App'
 //插件(vue.use引入插件，Vue.prototype使用方法)
 import '@/plugins/element'
 import '@/plugins/axios'
+import '@/plugins/echarts'
 
 //引入markdown 富文本编辑器（markDown，quill）
+import '@/plugins/markDown'
 import '@/plugins/quill'
 
 //管理全局js文件

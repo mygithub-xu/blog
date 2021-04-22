@@ -1,11 +1,10 @@
+
 <template>
     <div class="xm-body">
-
         <div class="xm-header" >
              <el-image class="bgimg" :src="bgImg"  fit="fill"></el-image>
              <div class="xm-header-jitang">
                 <h1>{{xmHeader}}</h1>
-                <h2></h2>
              </div>
         </div>
         <div class="xm-card">
@@ -51,11 +50,7 @@ export default {
                     this.list = res.data.body.records;
                 }
             });
-      },
-    //页数
-    handlePage(number, size){
-        
-    },
+      }
 
     }
 }

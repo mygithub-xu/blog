@@ -14,12 +14,6 @@ var constantRouterMap=[
     redirect: '/page/404',
     name: '404'
   },
-  {
-    path: '/login',
-    component: resolve => require(['@/components/layout/page/Login.vue'], resolve),
-    name: '登录'
-  },
-
   // 官网总体样式
   {
     // layout

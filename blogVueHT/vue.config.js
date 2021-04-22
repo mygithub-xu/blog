@@ -1,7 +1,7 @@
 let publicPath = './'
 if (process.env.NODE_ENV === 'production'||process.env.NODE_ENV === 'test') {
   // 生产公共路径
-  publicPath = './'
+  publicPath = '/HT/'
 }
 module.exports = {
   publicPath: publicPath, // 构建好的文件输出到哪里

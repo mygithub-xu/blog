@@ -1,4 +1,4 @@
-
+import User from "@/utils/common/UserContext"
 
 export default {
   install (Vue) {
@@ -18,6 +18,29 @@ export default {
         })
       }
     })
+    //按钮根据权限显示和影藏
+    Vue.directive('has', {
+      inserted: function (el, binding) {
+        if (!permissionJudge(binding.value)) {
+          el.parentNode.removeChild(el);
+        }
+
+        function permissionJudge (value) {
+          let list = User.getButtonUrlList()
+          if (!list) {
+            return false;
+          }
+          for (let i = 0; i < list.length; i++) {
+            if (list[i] === value) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+    });
+
+
   }
 
 

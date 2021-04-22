@@ -33,9 +33,16 @@ export default {
     methods: {
         cancelSave(){
             //返回上一页
+            //如果是苹果手机，刷新一下
+            if (this.isApple()) {
+                window.location.reload()
+            }
             this.$router.go(-1);
         },
-
+        isApple(){
+            var u = navigator.userAgent
+            return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        }
 
     }
     

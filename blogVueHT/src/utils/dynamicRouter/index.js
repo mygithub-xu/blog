@@ -9,9 +9,6 @@ import User from "@/utils/common/UserContext"
 var getRouter = null //暂存菜单数据
 
 router.beforeEach((to, from, next) => {
-  if(to.path.indexOf("/blog") != -1){
-    return next();
-  }
   //过滤静态路由
   if (to.path == '/login' || to.path == '/page/404') {
     return next();
@@ -81,7 +78,7 @@ function filterAsyncRouter (routers) {
     },
     {
       path: "*",
-      redirect: "/404"
+      redirect: "/login"
     },
   ]
 
@@ -130,11 +127,9 @@ function treeIteration (list) {
 }
 
 function loadView (view) {
+  view = view + '.vue'
   // 判断是否存在此文件,不存在则被catch到
-  require('@/views' + view + '.vue');
-
-  return () => import('@/views' + view + '.vue');
-
+  return (resolve) => require([`@/views${view}`], resolve)
 }
 function getToken () {
   return User.getToken()

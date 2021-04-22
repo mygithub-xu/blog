@@ -5,16 +5,6 @@
                :show-close="false"
                :visible.sync="dialogVisible">
       <div class="dialogHead">
-        <!-- <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" >
-            <el-select v-model="photoType" size="small" placeholder="请选择类型" @change="typeclick">
-                <el-option
-                    v-for="item in photoTypeData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                ></el-option>
-            </el-select>
-          </el-col> -->
         <el-col :xs="24"
                 :sm="24"
                 :md="24"
