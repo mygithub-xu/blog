@@ -103,11 +103,10 @@
 <style scoped>
     .pagination2{
       width: auto;
-      bottom: 60px;
-      right: 20px;
       display: flex;
       justify-content: flex-end;
       margin-bottom: 20px;
+      margin-top: 50px;
     }
     .el-pagination{
       padding: 10px 50px;

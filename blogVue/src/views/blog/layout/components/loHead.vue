@@ -19,8 +19,8 @@
             <div class="lo-menu-item">
               <el-menu :default-active="activeIndex" mode="horizontal" unique-opened router>
                 <el-menu-item v-for="item in routerList" :key="item.index" :index="item.index" >{{item.name}}</el-menu-item>
-                <el-menu-item index="/login">
-                  <div class="el-icon-position"></div>
+                <el-menu-item >
+                  <div class="el-icon-position" @click="goto"></div>
                 </el-menu-item>
               </el-menu>
             </div>
@@ -55,6 +55,9 @@ export default {
     methods: {
       handleCommand(command){
          this.$router.push(command);
+      },
+      goto(){
+        window.open('https://www.whfch.icu/HT/',"_blank")
       }
     }
 }

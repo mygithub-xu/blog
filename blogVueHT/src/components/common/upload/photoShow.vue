@@ -81,9 +81,8 @@ export default {
       default: () => "",
     }
   },
-  created () {
+  mounted () {
     this.getdata();
-    // this.getxiala();
   },
   methods: {
     uploadhandleClose () {
@@ -153,7 +152,7 @@ export default {
             this.pageData.totalCount = res.data.body.total;
             this.pageData.totalPage = res.data.body.pages;
           }
-        });
+        })
     },
     handleClose () {
       this.dialogVisible = false;

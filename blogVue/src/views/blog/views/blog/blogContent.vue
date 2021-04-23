@@ -50,12 +50,6 @@ export default {
 </script>
 
 <style scoped>
-    .pagination2{
-        bottom: 60px;
-        position: absolute;
-        right: 20px;
-        
-    }
     .ql-container.ql-snow{
         border: 0px solid #ccc;
         border-bottom: 1px solid #ccc;
