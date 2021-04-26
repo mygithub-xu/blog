@@ -667,7 +667,7 @@
                                 label: item.label,
                                 value: item.value,
                                 checked: false
-                            }));;
+                            }))
                         }
                 });
 

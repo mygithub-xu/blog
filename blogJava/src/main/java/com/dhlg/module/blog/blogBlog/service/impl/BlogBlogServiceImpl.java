@@ -77,4 +77,10 @@ public class BlogBlogServiceImpl extends ServiceImpl<BlogBlogMapper, BlogBlog> i
         IPage<BlogBlog> dataList = doMapper.listFieldQuery(new Page(number, size), params);
         return new Result("200", dataList);
     }
+
+    @Override
+    public Result readCountAdd(String id) {
+        doMapper.readCountAdd(id);
+        return null;
+    }
 }

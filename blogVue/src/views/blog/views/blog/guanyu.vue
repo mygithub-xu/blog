@@ -269,7 +269,7 @@ export default {
     height: 80%;
 }
 .qqpc {
-    background: url(../../../../assets/img/cover.jpg)
+    background: url('https://www.whfch.icu/resources/cover.jpg')
         no-repeat center center;
     background-size: cover;
     position: relative;

@@ -58,13 +58,13 @@ public class BlogBlog implements Serializable {
     /**
      * 阅读数量
      */
-    @TableField("read")
-    private String read;
+    @TableField("reading")
+    private int reading;
     /**
      * 喜欢数量
      */
-    @TableField("like")
-    private String like;
+    @TableField("likes")
+    private int likes;
     /**
      * 创建时间
      */
@@ -82,5 +82,9 @@ public class BlogBlog implements Serializable {
      */
     @TableField("cover_img")
     private String coverImg;
+
+    @TableField(exist = false)
+    private String categoryName;
+
 
 }

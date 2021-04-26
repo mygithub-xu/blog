@@ -3,8 +3,12 @@
         
         <div class="dialog-blog">
             <a size="small" class="icon iconfont icon-changjiantou_zuo" @click="cancelSave"></a>
+            <div class="blog-header">
+                <h1>{{params.title}}</h1>
+                <p>{{params.description}}</p>
+            </div>
             <div class="ql-container ql-snow">
-                <div class="ql-editor" v-html="content">
+                <div class="ql-editor" v-html="params.content">
                 </div>
             </div>
             <div class="weixin-img">
@@ -19,16 +23,14 @@
 
 <script>
 export default {
-    
     data() {
       return {
-        wechat:"../../../../static/img/qq.png",
-        content:""
-      };
+        wechat: "https://www.whfch.icu/resources/wechat.jpg",
+        params: {}
+      }
     },
     created(){
-        let cn=this.$route.params.content;
-        this.content=this.$route.params.content;
+        this.params=this.$route.params;
     },
     methods: {
         cancelSave(){
@@ -50,6 +52,18 @@ export default {
 </script>
 
 <style scoped>
+    .blog-header h1{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .blog-header p{
+        margin-top: 20px;
+        font-size: 22px;
+    }
+    .blog-header{
+        width: 100%;
+        text-align: center;
+    }
     .ql-container.ql-snow{
         border: 0px solid #ccc;
         border-bottom: 1px solid #ccc;
@@ -72,5 +86,15 @@ export default {
     .jiawo{
         color: #409EFF;
         margin-top: 10px;
+    }
+    @media screen and (max-width:600px){
+        .blog-header h1{
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .blog-header p{
+            margin-top: 20px;
+            font-size: 15px;
+        }
     }
 </style>

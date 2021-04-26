@@ -3,7 +3,7 @@
     <div class="blog-body">
         <div class="blog-header">
             <h2 class="blog-title">
-                <el-link class="title" @click="blogClick(item.content)">{{item.title}}</el-link>
+                <el-link class="title" @click="blogClick(item)">{{item.title}}</el-link>
             </h2>
             <div class="blog-description">
                 <p>{{item.description}}</p>
@@ -18,7 +18,7 @@
                     <span class="blog-divider">|</span>
                     <span class="icon iconfont icon-tubiao-"></span>
                     <span >分类于</span>
-                    <span>{{item.category}}</span>
+                    <span><el-tag type="success">{{item.categoryName}}</el-tag></span>
                 </span>
                 <span class="blog-read">
                     <span class="blog-divider">|</span>
@@ -55,18 +55,17 @@ export default {
         }
     },
     methods: {
-        blogClick(title){
+        blogClick(item){
             this.$router.push({
-                name:'blog内容',
-                params:{
-                    content:title,
-                }
+                name:'文章',
+                params:item
             })
-  
-            this.$emit("openBlog",title);
+            // 阅读+1
+            this.readCountAdd(item.id)
+            this.$emit("openBlog",item);
         },
-        getdata() {
-            
+        readCountAdd(id) {
+            this.$http.get(this.api.blogBlogReadCountAdd + id)
         }
     }
 }

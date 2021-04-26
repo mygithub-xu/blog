@@ -21,7 +21,6 @@
         <trim prefix="where" prefixOverrides="and">
             <if test="parameter.condition != null and parameter.condition.queryContent !=null and parameter.condition.queryContent !='' ">
                 CONCAT(
-                            ,img
                             ,title
                             ,description
                             ,url

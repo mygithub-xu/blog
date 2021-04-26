@@ -1,10 +1,8 @@
 <template>
   <div class="footer">
-
 	<div class="maxw">
-    	<!-- <p>地址：广州市黄埔区锐丰中心1栋631</p> -->
         <p>学习交流群：010-00000000</p>
-        <p>Copyright &copy; 2019  广州航影科技技术有限公司  </p>
+        <p>Copyright &copy; 2019  个人博客  </p>
   </div>
   </div>
 </template>

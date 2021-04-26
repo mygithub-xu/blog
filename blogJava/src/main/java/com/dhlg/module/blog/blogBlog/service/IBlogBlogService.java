@@ -27,4 +27,6 @@ public interface IBlogBlogService extends IService<BlogBlog> {
     Result queryByCondition(Parameter parameter);
 
     Result listFieldQuery(Map<String, Object> params);
+
+    Result readCountAdd(String id);
 }

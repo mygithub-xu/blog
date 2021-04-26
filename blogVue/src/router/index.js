@@ -27,10 +27,10 @@ var constantRouterMap=[
         path: '/blog/shouye',
         component: resolve => require(['@/views/blog/views/blog/shouye.vue'], resolve),
         meta: {
-          title: '首页',
+          title: '旧岸Blog',
           idj: ''
         },
-        name: '首页'
+        name: '旧岸Blog'
       },
       {
         path: '/blog/biaoqian',
@@ -81,10 +81,10 @@ var constantRouterMap=[
         path: '/blog/blogContent',
         component: resolve => require(['@/views/blog/views/blog/blogContent.vue'], resolve),
         meta: {
-          title: 'blog内容',
+          title: '文章',
           idj: ''
         },
-        name: 'blog内容'
+        name: '文章'
       }
 
     ]

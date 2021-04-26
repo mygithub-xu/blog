@@ -63,9 +63,6 @@ public class BlogBlogController {
                 if(StringUtils.isBlank(parameter)){
                         throw new ParamIsNullException();
                 }
-                log.info("123");
-                log.error("456");
-                log.warn("789");
                 return  doService.queryByCondition(parameter);
         }
 
@@ -74,7 +71,11 @@ public class BlogBlogController {
         public Result listFieldQuery(@RequestBody Map<String, Object> params) {
         return  doService.listFieldQuery(params);
         }
-
+        @ApiOperation("根据条件分页获取按钮数据")
+        @GetMapping("/readCountAdd/{id}")
+        public Result readCountAdd(@PathVariable String id) {
+                return  doService.readCountAdd(id);
+        }
 
         @ApiOperation("测试")
         @GetMapping("/text")

@@ -42,13 +42,14 @@ export default {
             totalCount: 0,
             totalPage: 0
         },
-        editVisible:false,
-        content:"",
-        isMobile:false
+        editVisible: false,
+        content: "",
+        isMobile: false,
+        biaoQianList: []
       }
     },
     created(){
-        this.getdata();
+        this.getdata()
     },
     mounted(){
       // 判断是否为手机
@@ -56,21 +57,19 @@ export default {
     },
     methods: {
       getdata() {
-            this.$http
-            .post(this.api.blogBlogQueryByCondition, {
-            condition: {
-                queryContent: this.queryContent,
-            },
-            number: this.pageData.pageNumber,
-            size: this.pageData.pageSize
-            })
-            .then(res => {
-            if (res.data.code == "200") {
-                this.pageData.list = res.data.body.records;
-                this.pageData.totalCount = res.data.body.total;
-                this.pageData.totalPage = res.data.body.pages;
-            }
-            });
+        this.$http.post(this.api.blogBlogQueryByCondition, {
+        condition: {
+            queryContent: this.queryContent,
+        },
+        number: this.pageData.pageNumber,
+        size: this.pageData.pageSize
+        }).then(res => {
+        if (res.data.code == "200") {
+            this.pageData.list = res.data.body.records;
+            this.pageData.totalCount = res.data.body.total;
+            this.pageData.totalPage = res.data.body.pages;
+        }
+        })
       },
     //页数
     handlePage(number, size){

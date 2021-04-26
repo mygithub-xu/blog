@@ -22,5 +22,7 @@ public interface BlogBlogMapper extends BaseMapper<BlogBlog> {
     IPage<BlogBlog> queryByCondition(Page page, @Param("parameter") Parameter parameter);
 
     IPage<BlogBlog> listFieldQuery(Page page, @Param("parameter") Map<String, Object> params);
+
+    void readCountAdd(String id);
 }
         

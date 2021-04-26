@@ -9,8 +9,8 @@
         <result column="content" property="content" />
         <result column="category" property="category" />
         <result column="description" property="description" />
-        <result column="read" property="read" />
-        <result column="like" property="like" />
+        <result column="reading" property="reading" />
+        <result column="likes" property="likes" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="cover_img" property="coverImg" />
@@ -18,10 +18,11 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-                id,                title,                content,                category,                description,                read,                like,                create_time,                update_time,                cover_img    </sql>
+       id,title,content,  category,description, reading, likes, create_time,  update_time, cover_img    </sql>
 
     <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter.Parameter" resultType="com.dhlg.module.blog.blogBlog.entity.BlogBlog">
-        select * from blog_blog
+        select b.*,s.dic_label as categoryName from blog_blog b left join (SELECT d.dic_value,d.dic_label from sys_dic d where d.dic_type_id in
+        (SELECT id from sys_dic_type t where t.dic_type = 'blogType')) s on b.category = s.dic_value
         <trim prefix="where" prefixOverrides="and">
             <if test="parameter.condition != null and parameter.condition.category !=null and parameter.condition.category !=''and parameter.condition.category !='-1' ">
                 category =#{parameter.condition.category}
@@ -34,56 +35,37 @@
 
         select * from blog_blog
         <trim prefix="where" prefixOverrides="and">
-
-
                     <if test=" parameter.title !=null and parameter.title !='' ">
                         and title like concat('%',#{parameter.title},'%')
                     </if>
-
-
                     <if test=" parameter.content !=null and parameter.content !='' ">
                         and content like concat('%',#{parameter.content},'%')
                     </if>
-
-
                     <if test=" parameter.category !=null and parameter.category !='' ">
                         and category like concat('%',#{parameter.category},'%')
                     </if>
-
-
                     <if test=" parameter.description !=null and parameter.description !='' ">
                         and description like concat('%',#{parameter.description},'%')
                     </if>
-
-
-                    <if test=" parameter.read !=null and parameter.read !='' ">
-                        and read like concat('%',#{parameter.read},'%')
+                    <if test=" parameter.reading !=null and parameter.reading !='' ">
+                        and reading like concat('%',#{parameter.reading},'%')
+                    </if>
+                    <if test=" parameter.likes !=null and parameter.likes !='' ">
+                        and likes like concat('%',#{parameter.likes},'%')
+                    </if>
+                    <if test="parameter.createTime != null and parameter.createTime .size() == 2">
+                        and create_time between
+                        <foreach collection="parameter.createTime" index="index" item="item" open=" " separator=" and " close=" ">
+                            #{item}
+                        </foreach>
                     </if>
 
-
-                    <if test=" parameter.like !=null and parameter.like !='' ">
-                        and like like concat('%',#{parameter.like},'%')
+                    <if test="parameter.updateTime != null and parameter.updateTime .size() == 2">
+                        and update_time between
+                        <foreach collection="parameter.updateTime" index="index" item="item" open=" " separator=" and " close=" ">
+                            #{item}
+                        </foreach>
                     </if>
-
-
-                        <if test="parameter.createTime != null and parameter.createTime .size() == 2">
-                            and create_time between
-                            <foreach collection="parameter.createTime" index="index" item="item" open=" " separator=" and " close=" ">
-                                #{item}
-                            </foreach>
-                        </if>
-
-
-
-                        <if test="parameter.updateTime != null and parameter.updateTime .size() == 2">
-                            and update_time between
-                            <foreach collection="parameter.updateTime" index="index" item="item" open=" " separator=" and " close=" ">
-                                #{item}
-                            </foreach>
-                        </if>
-
-
-
                     <if test=" parameter.coverImg !=null and parameter.coverImg !='' ">
                         and cover_img like concat('%',#{parameter.coverImg},'%')
                     </if>
@@ -91,5 +73,7 @@
         </trim>
         order by id desc
     </select>
-
+    <update id="readCountAdd" parameterType="String">
+        UPDATE blog_blog set reading = reading + 1 where id = #{id}
+    </update>
 </mapper>

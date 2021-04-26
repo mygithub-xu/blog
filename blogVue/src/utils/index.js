@@ -16,3 +16,6 @@ Vue.prototype.api = api;//全局使用api
 //操作数组，转化类型等等，，工具类
 import utils from "@/utils/common/utils"
 Vue.prototype.$utils = utils;
+
+//设置title
+import "@/utils/dynamicRouter/index"

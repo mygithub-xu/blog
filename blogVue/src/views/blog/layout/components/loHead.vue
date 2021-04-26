@@ -13,7 +13,7 @@
         </template>
         <template v-else>
           <div class="lo-avatar">
-                <img class="lo-dh-img" src="@/assets/img/avatar.png"/>
+                <img class="lo-dh-img" :src="imgSrc"/>
           </div>
           <div class="lo-menu">
             <div class="lo-menu-item">
@@ -43,7 +43,8 @@ export default {
           {index:'/blog/liuyan',name:'留言'},
           {index:'/blog/guanyu',name:'我的'},
         ],
-        drawerStatus: false
+        drawerStatus: false,
+        imgSrc: "https://www.whfch.icu/resources/avatar.png"
       }
     },
     props:{

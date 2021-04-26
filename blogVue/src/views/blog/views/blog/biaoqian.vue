@@ -79,7 +79,7 @@
                 if (res.data.code == 200) {
                     this.biaoqian = res.data.body;
                 }
-            });
+            })
         },
         //页数
         handlePage(number, size){
@@ -87,10 +87,9 @@
             this.pageData.pageSize=size;
             this.getData();
         },
-        handleClick(tab, event) {
+        handleClick() {
             this.empty();
             this.getData();
-
         },
         empty(){
             this.pageData.pageNumber=1;
