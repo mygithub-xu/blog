@@ -412,14 +412,7 @@
                         message: "  ",
                         trigger: "blur"
                     }
-                ],
-                coverImg: [
-                    {
-                        required: true,
-                        message: "  ",
-                        trigger: "blur"
-                    }
-                ],
+                ]
 
             },
             queryVisible:{
