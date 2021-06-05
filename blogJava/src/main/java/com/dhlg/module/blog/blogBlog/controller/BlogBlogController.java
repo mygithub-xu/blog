@@ -77,6 +77,12 @@ public class BlogBlogController {
                 return  doService.readCountAdd(id);
         }
 
+        @ApiOperation("根据id查询文章")
+        @GetMapping("/queryById/{id}")
+        public Result queryById(@PathVariable String id) {
+                return  doService.queryById(id);
+        }
+
         @ApiOperation("测试")
         @GetMapping("/text")
         public String text() {

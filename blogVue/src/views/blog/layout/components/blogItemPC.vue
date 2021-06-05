@@ -50,12 +50,10 @@ export default {
     methods: {
         blogClick(item){
             this.$router.push({
-                name:'文章',
-                params:item
+                path:`/blog/blogContent/${item.id}`
             })
             // 阅读+1
             this.readCountAdd(item.id)
-            this.$emit("openBlog",item);
         },
         readCountAdd(id) {
             this.$http.get(this.api.blogBlogReadCountAdd + id)

@@ -30,7 +30,7 @@ export default {
       }
     },
     created(){
-        this.params=this.$route.params;
+        this.getData()
     },
     methods: {
         cancelSave(){
@@ -44,8 +44,16 @@ export default {
         isApple(){
             var u = navigator.userAgent
             return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        },
+        getData(){
+            let id = this.$route.params.id
+            console.log(id)
+            this.$http.get(this.api.blogBlogQueryById + id).then(res => {
+                if (res.data.code == "200") {
+                    this.params = res.data.body;
+                }
+            })
         }
-
     }
     
 }

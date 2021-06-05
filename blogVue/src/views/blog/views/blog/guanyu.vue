@@ -1,5 +1,6 @@
+
 <template>
-<div >
+<div>
     <div class="mine">
         <div class="tim-content qqpc" :style="{'height':screeHeight+'px'}">
             <div class="title" v-bind:style="{'background-color': titleColor,'border-bottom':titleBorder }">
@@ -25,9 +26,8 @@
                 <h2 class="content2-title content-item-title">个人资料</h2>
                 <div class="content2-1">
                     <p class="content2-sex "> 性别： 男</p> 
-                    <p class="content2-hobby"> 爱好： 打游戏</p> 
+                    <p class="content2-hobby"> 爱好： 看电影，打游戏</p> 
                     <p class="content2-constellation"> 星座： 狮子座</p> 
-                    <p class="content2-age"> 年龄： 90后</p> 
                     <p class="content2-address"> 地区： 江西省</p> 
                     <p class="content2-Personal"> 性格： 阳光</p> 
                     <p >毕业学校：东华理工大学长江学院</p>
@@ -93,7 +93,7 @@
         </div>
         <div class="foot">foot</div>
     </div>  
-    </div>
+</div>
 </template>
 
 <script>

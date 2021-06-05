@@ -8,6 +8,7 @@ import com.dhlg.module.blog.blogBlog.service.IBlogBlogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dhlg.utils.*;
 import com.dhlg.utils.Parameter.Parameter;
+import com.mysql.cj.jdbc.util.ResultSetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +83,14 @@ public class BlogBlogServiceImpl extends ServiceImpl<BlogBlogMapper, BlogBlog> i
     public Result readCountAdd(String id) {
         doMapper.readCountAdd(id);
         return null;
+    }
+
+    @Override
+    public Result queryById(String id) {
+        BlogBlog blog = getById(id);
+        if (StringUtils.isBlank(blog)){
+            Result.error("未找到该文章");
+        }
+        return Result.success(blog);
     }
 }

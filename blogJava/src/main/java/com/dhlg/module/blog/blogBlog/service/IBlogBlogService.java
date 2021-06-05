@@ -29,4 +29,6 @@ public interface IBlogBlogService extends IService<BlogBlog> {
     Result listFieldQuery(Map<String, Object> params);
 
     Result readCountAdd(String id);
+
+    Result queryById(String id);
 }

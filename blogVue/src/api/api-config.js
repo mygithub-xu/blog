@@ -30,6 +30,7 @@ export default {
   blogBlogSaveOrUpdate: `api/blog/blogBlog/saveOrUpdate`,//更新或新增
   blogBlogListFieldQuery: `api/blog/blogBlog/listFieldQuery`,//列表查询
   blogBlogReadCountAdd: `api/blog/blogBlog/readCountAdd/`,//列表查询
+  blogBlogQueryById: `api/blog/blogBlog/queryById/`,//根据id获取内容
   
 
 

@@ -78,7 +78,7 @@ var constantRouterMap=[
         name: '关于'
       },
       {
-        path: '/blog/blogContent',
+        path: '/blog/blogContent/:id',
         component: resolve => require(['@/views/blog/views/blog/blogContent.vue'], resolve),
         meta: {
           title: '文章',
