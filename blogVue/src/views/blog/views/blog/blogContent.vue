@@ -51,6 +51,13 @@ export default {
             this.$http.get(this.api.blogBlogQueryById + id).then(res => {
                 if (res.data.code == "200") {
                     this.params = res.data.body;
+                    if (!this.params) {
+                        this.params = {
+                            content: "文章未找到",
+                            title: "",
+                            description: ""
+                        }
+                    }
                 }
             })
         }
