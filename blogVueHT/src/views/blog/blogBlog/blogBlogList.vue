@@ -334,6 +334,7 @@
 </template>
 <script>
     export default {
+        name: 'blogBlogList',
         data(){
             return{
                 preVisiable:false,

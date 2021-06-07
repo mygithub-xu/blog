@@ -204,6 +204,7 @@
 </template>
 <script>
     export default {
+        name:'blogProjectList',
         data(){
             return{
                 preVisiable:false,
@@ -381,8 +382,8 @@
                         type: "success"
                     });
                 }
-                this.getdata();
-            });
+                this.getdata()
+            })
             })
             .catch(() => {
                     this.$message({
@@ -404,17 +405,14 @@
             },
             //保存/修改
             handleSave(){
-                this.$refs
-                        .form.validate(valid => {if (valid) {
-
-                        if(!!this.form.createTime){
+                this.$refs.form.validate(valid => {if (valid) {
+                        if(this.form.createTime){
                             var d=this.form.createTime;
                             this.form.createTime=this.dateUtils(d);
                         }
                         this.$http.post(this.api.blogProjectSaveOrUpdate, this.form).then(res=> {
                             if (res.data.code == "200") {
-                            this.$message
-                                    .success(res.data.message);
+                            this.$message.success(res.data.message);
                             this.editVisible = false;
                             this.empty();
                             this.getdata();
@@ -437,51 +435,18 @@
                     description: "",
                     url: "",
                     createTime: "",
-            };
+                }
                 this.condition= {
                     id: "",
-                            img: "",
-                            title: "",
-                            description: "",
-                            url: "",
-                            createTime: [],
-            }
+                    img: "",
+                    title: "",
+                    description: "",
+                    url: "",
+                    createTime: [],
+                }
             },
-
             //获取下拉数据
-            getxiala(){
-                //下拉数据模板
-                // this.$http
-                //        .get(this.api.dicTypeGetType + "orderStatus").then(res => {
-                //         if (res.data.code == 200) {
-                //             this.orderStatusList = res.data.body.map(item => ({
-                //                 label: item.label,
-                //                 value: parseInt(item.value),
-                //                 checked: false
-                //             }));;
-                // }
-                // });
-
-                // this.$http
-                //     .post(this.api.appUserQueryByCondition, {
-                //         condition:  {},
-                //         number: 1,
-                //         size: 99999
-                //     })
-                //     .then(res => {
-                //     if (res.data.code == "200") {
-                //     this.checkBoxList.parendIdList=res.data.body.records.map(item => ({
-                //         label: item.storeName,
-                //         value: item.id,
-                //         checked: false
-                //     }));
-                //     this.checkBoxList.userIdList=this.checkBoxList.parendIdList;
-
-                //     }
-                // });
-
-            },
-
+            getxiala(){},
             //获取数据
             getTableData(){
                 this.$http

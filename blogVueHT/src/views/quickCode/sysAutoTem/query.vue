@@ -3,7 +3,7 @@
         <!-- 查询区域 -->
 
         <el-scrollbar style="width:100%">
-        <template v-show="frameFontvisible">
+        <template v-if="frameFontvisible">
         <div class="container-query">
             <queryItem label="模板名：">
                 <el-input v-model="queryContion.temName" placeholder="请输入模板名"></el-input>
@@ -116,7 +116,6 @@ export default {
 
         //编辑
         handleEdit(row) {
-          debugger
           this.frameFontvisible = false
           this.$refs.editLayout.editInit(row)
         },

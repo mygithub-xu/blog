@@ -84,10 +84,8 @@
                 sessionStorage.setItem("User", JSON.stringify(res.data.body.user))
 
                 //更新头像
-                this.$message.success("登入成功");
-                let indexPath = this.$store.state.tabRouter.indexTab;
-                console.log(this.$router);
-                this.$router.push("/page/Dashboard");
+                this.$message.success("登入成功")
+                this.$router.push("/page/Dashboard").catch(()=>{})
                 
               }else{
                 if (res.data.code === "410") {
@@ -97,23 +95,21 @@
                     this.$message({
                       message: "登陆失败，账号或密码错误!!",
                       type: "error"
-                    }); 
+                    })
                 }
 
                 if (res.data.code === "500") {
                   this.$message({
                     message: "登陆失败",
                     type: "error"
-                  });
-                  
+                  })
                 }
-
               }
             loading.close();
               // this.fullscreenLoading=false;
             }).catch(() => {
-                loading.close();
-              });
+                loading.close()
+              })
           } 
 
         });
