@@ -90,11 +90,6 @@ export default {
       margin-bottom: 20px;
       margin-top: 50px;
     }
-    .el-pagination{
-      padding: 10px 50px;
-      background-color: white;
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    }
     .pagination3{
       width: auto;
       display: flex;

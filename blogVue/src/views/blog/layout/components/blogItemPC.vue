@@ -3,7 +3,7 @@
     <div class="blog-body">
         <div class="blog-header">
             <h2 class="blog-title">
-                <el-link class="title" @click="blogClick(item)">{{item.title}}</el-link>
+                <el-link  class="title" @click="blogClick(item)">{{item.title}}</el-link>
             </h2>
             <div class="blog-description">
                 <p>{{item.description}}</p>
@@ -11,7 +11,7 @@
             <div class="blog-meta">
                 <span class="blog-time">
                     <span class="icon iconfont icon-rili"></span>
-                    <span>{{item.createTime}}</span>
+                    <span>{{newCreatTime(item.createTime)}}</span>
                 </span>
                 <span class="blog-category">
                     <span class="blog-divider">|</span>
@@ -47,6 +47,13 @@ export default {
             default: () => null,
         }
     },
+    computed:{
+        newCreatTime(){
+            return function(createTime){
+                return createTime.substring(0,10)
+            }
+        }
+    },
     methods: {
         blogClick(item){
             this.$router.push({
@@ -67,20 +74,20 @@ export default {
         border-radius: 10px;
         background-color: #ffffff;
         padding: 10px 20px;
-        box-shadow:  0 2px 12px 0 rgba(0,0,0,.1);
-        min-height: 200px;
+        height: auto;
         margin: 10px 10px;
+        display: flex;
     }
     .blog-title{
-        height: 73px;
         width: 100%;
     }
     .blog-title .title{
         margin-top: 20px;
-        color: #555;
-        font-size: 22px;
+        color: #000000;
+        font-size: 18px;
         line-height: 1.2;
         vertical-align: top;
+        font-weight: 700;
     }
     .blog-meta{
         height: 24px;
@@ -104,21 +111,20 @@ export default {
     .blog-divider{
         margin: 0 0.5em;
     }
+    .blog-description{
+        margin-top: 5px;
+    }
     .blog-description p{
         font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-        font-size: 16px;
-        line-height: 2;
-        color: #555;
-        height: 100px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: #999;
         letter-spacing:1px;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		overflow: hidden;
+        margin-bottom: 10px;
+
     }
     .blog-header{
         float: left;
         width: 100%;
-        height: 200px;
     }
 </style>
