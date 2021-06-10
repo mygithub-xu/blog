@@ -3,6 +3,7 @@
   <div>
     <el-pagination 
       v-if="!isMobile"
+      style="padding-left: 10px;padding-right: 10px;"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="pageList.pageNumber"
