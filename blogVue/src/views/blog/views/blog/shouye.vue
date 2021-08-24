@@ -60,6 +60,7 @@ export default {
         this.$http.post(this.api.blogBlogQueryByCondition, {
         condition: {
             queryContent: this.queryContent,
+            isShow: '0'
         },
         number: this.pageData.pageNumber,
         size: this.pageData.pageSize

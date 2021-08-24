@@ -14,18 +14,22 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="cover_img" property="coverImg" />
+        <result column="is_show" property="isShow" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-       id,title,content,  category,description, reading, likes, create_time,  update_time, cover_img    </sql>
+       id,title,content,  category,description, reading, likes, create_time,  update_time, cover_img,     </sql>
 
     <select id="queryByCondition" parameterType="com.dhlg.utils.Parameter.Parameter" resultType="com.dhlg.module.blog.blogBlog.entity.BlogBlog">
         select b.id,b.title,b.category,b.description,b.reading,b.likes,b.create_time,b.update_time,b.cover_img,s.dic_label as categoryName from blog_blog b left join (SELECT d.dic_value,d.dic_label from sys_dic d where d.dic_type_id in
         (SELECT id from sys_dic_type t where t.dic_type = 'blogType')) s on b.category = s.dic_value
         <trim prefix="where" prefixOverrides="and">
+            <if test="parameter.condition != null and parameter.condition.isShow !=null and parameter.condition.isShow !=''">
+                b.is_show = #{parameter.condition.isShow}
+            </if>
             <if test="parameter.condition != null and parameter.condition.category !=null and parameter.condition.category !=''and parameter.condition.category !='-1' ">
-                category =#{parameter.condition.category}
+                b.category =#{parameter.condition.category}
             </if>
         </trim>
         order by create_time desc

@@ -65,6 +65,12 @@ public class BlogBlog implements Serializable {
      */
     @TableField("likes")
     private int likes;
+
+    /**
+     * 喜欢数量
+     */
+    @TableField("is_show")
+    private int isShow;
     /**
      * 创建时间
      */
